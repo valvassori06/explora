@@ -1,0 +1,105 @@
+<!-- /src/views/planejar.html --> <!-- caminho do arquivo no projeto -->
+<!DOCTYPE html> <!-- define o documento como HTML5 -->
+<html lang="pt-BR"> <!-- idioma principal: português do Brasil -->
+<head>
+  <meta charset="UTF-8" /> <!-- suporta acentos e caracteres especiais -->
+  <meta name="viewport" content="width=device-width,initial-scale=1" /> <!-- layout responsivo no mobile -->
+  <title>Explora – Planejar</title> <!-- título da aba do navegador -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" /> <!-- fonte Poppins -->
+  <link rel="stylesheet" href="../styles/planejar.css" /> <!-- estilos específicos desta página -->
+</head>
+
+<body>
+  <!-- ===== CABEÇALHO (logo + navegação) ===== -->
+  <header> <!-- topo do site -->
+    <img class="logo" src="../../public/logos/llogo.png" alt="Logo Explora" /> <!-- logomarca -->
+    <nav class="navegacao"> <!-- menu -->
+      <a href="index.html" class="btn-link">Início</a> <!-- link para home -->
+      <a href="planejar.html" class="btn-link active">Planejar</a> <!-- página atual -->
+      <a href="roteiros.html" class="btn-link">Roteiros</a> <!-- link para roteiros -->
+      <a href="cadastro.html" class="btn-cadastro">Cadastre-se ou faça login</a> <!-- CTA de cadastro/login -->
+    </nav>
+  </header>
+
+  <!-- ===== SEÇÃO PRINCIPAL: PASSO A PASSO DO PLANEJAMENTO ===== -->
+  <section class="plan-section container"> <!-- bloco com cartão translúcido e grid -->
+    <h2>Planeje sua viagem</h2> <!-- título da seção -->
+
+    <!-- === Passo 1: CEP de origem === -->
+    <div class="step"> <!-- cartão/passo -->
+      <h3>1. Informe seu CEP</h3> <!-- título do passo -->
+      <p>Digite o CEP da sua residência para calcular a distância.</p> <!-- instrução -->
+      <div class="form-row"> <!-- linha com input e botão -->
+        <input type="text" id="cepInput" maxlength="9" placeholder="00000-000" /> <!-- campo para CEP -->
+        <button id="buscarCepBtn" class="btn-orange">Buscar endereço</button> <!-- aciona consulta ViaCEP -->
+      </div>
+      <p id="enderecoInfo" class="info"></p> <!-- mostra endereço ou mensagens (erro/aviso) -->
+    </div>
+
+    <!-- === Passo 2: Escolher destino (aparece após CEP) === -->
+    <div class="step" id="step-destination" style="display:none"> <!-- oculto até preencher CEP -->
+      <h3>2. Escolha o destino</h3> <!-- título -->
+      <select id="destinoSelect"> <!-- select populado via JS -->
+        <option value="">Selecione o destino</option> <!-- opção neutra -->
+      </select>
+    </div>
+
+    <!-- === Passo 3: Hospedagem === -->
+    <div class="step" id="step-stay" style="display:none"> <!-- oculto até escolher destino -->
+      <h3>3. Hospedagem</h3> <!-- título -->
+      <div class="form-row"> <!-- linha com label + input -->
+        <label for="noitesInput">Noites:</label> <!-- rótulo do input -->
+        <input type="number" id="noitesInput" value="1" min="1" /> <!-- nº de noites -->
+      </div>
+      <div class="buttons"> <!-- botões de tipo de hospedagem -->
+        <button class="btn-outline stayBtn" data-type="casa">Casa Alugada</button> <!-- opção casa -->
+        <button class="btn-outline stayBtn" data-type="hotel">Hotel</button> <!-- opção hotel -->
+      </div>
+      <div id="hospedagemResultados" class="resultados"></div> <!-- lista de opções e preços -->
+    </div>
+
+    <!-- === Passo 4: Transporte === -->
+    <div class="step" id="step-transport" style="display:none"> <!-- oculto até escolher hospedagem -->
+      <h3>4. Transporte</h3> <!-- título -->
+      <div class="form-row"> <!-- linha com label + input -->
+        <label for="numPessoas">Pessoas:</label> <!-- rótulo -->
+        <input type="number" id="numPessoas" value="1" min="1" /> <!-- nº de viajantes -->
+      </div>
+      <div class="buttons"> <!-- botões de tipo de transporte -->
+        <button class="btn-outline transportBtn" data-type="carro">Carro</button> <!-- simula aluguel + combustível -->
+        <button class="btn-outline transportBtn" data-type="onibus">Ônibus</button> <!-- calcula por km e pessoas -->
+        <button class="btn-outline transportBtn" data-type="aviao">Avião</button> <!-- valor base por pessoa -->
+      </div>
+      <div id="transporteResultados" class="resultados"></div> <!-- mostra custo total e por pessoa -->
+    </div>
+
+    <!-- === Passo 5: Resumo e Dicas === -->
+    <div class="step" id="step-summary" style="display:none"> <!-- aparece após transporte -->
+      <h3>5. Resumo e Dicas</h3> <!-- título -->
+      <div id="resumo" class="resumo"></div> <!-- origem, destino, noites -->
+      <div id="dicas" class="dicas"></div> <!-- lista de dicas do destino -->
+      <p id="final-msg" style="display:none;margin-top:16px;font-weight:600;">agora faça o seu roteiro com a gente</p> <!-- mensagem final -->
+      <button id="btnConcluirPlanejamento" type="button">Concluir Planejamento</button> <!-- CTA final -->
+    </div>
+  </section>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="../script/planner.js"></script> <!-- lógica do planner (destinos, cálculos, ViaCEP, etc.) -->
+  <script src="../script/auth.js"></script> <!-- (opcional) integrações de autenticação -->
+  <script>
+    // Espera o HTML carregar para anexar eventos
+    document.addEventListener('DOMContentLoaded', function(){
+      const btn = document.getElementById('btnConcluirPlanejamento'); // botão final
+      const msg = document.getElementById('final-msg'); // parágrafo de confirmação
+
+      if (btn){
+        btn.addEventListener('click', function(){ // clique em "Concluir Planejamento"
+          if (window.ExploraAuth) { ExploraAuth.setPlanDone(true); } // marca no auth (se existir) que concluiu o plano
+          if (msg) { msg.style.display = 'block'; } // mostra mensagem final
+          setTimeout(() => { location.href = 'roteiros.html'; }, 1200); // redireciona após 1,2s
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html> <!-- define o documento como HTML5 -->
+<html lang="pt-BR"> <!-- idioma principal definido como português do Brasil -->
+
+<head>
+  <meta charset="UTF-8" /> <!-- permite o uso de acentos e caracteres especiais -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- torna o site responsivo em telas menores -->
+  <title>Explora</title> <!-- título exibido na aba do navegador -->
+
+  <!-- Importa o CSS principal e a fonte Poppins -->
+  <link rel="stylesheet" href="../styles/styles.css" /> <!-- estilos da página -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap"
+    rel="stylesheet"
+  /> <!-- fonte do Google Fonts -->
+</head>
+
+<body>
+  <!-- ==================== CABEÇALHO ==================== -->
+  <header>
+    <div></div> <!-- espaço vazio (pode ser usado para logo no futuro) -->
+    <nav class="navegacao"> <!-- barra de navegação -->
+      <a href="cadastro.html" class="btn-cadastro">Cadastre-se ou faça login</a> <!-- botão de acesso/cadastro -->
+    </nav>
+  </header>
+
+  <!-- logo principal do site -->
+  <img class="logo" src="../../public/logos/llogo.png" alt="Logo Explora" />
+
+  <!-- ==================== SEÇÃO PRINCIPAL (HERO DARK) ==================== -->
+  <section class="hero-dark"> <!-- seção inicial com fundo escuro -->
+    <div class="container"> <!-- container centralizado -->
+      <h1>Planeje sua viagem</h1> <!-- título principal -->
+      <p>
+        Descubra destinos acessíveis e acomodações econômicas para suas
+        próximas aventuras.
+      </p> <!-- texto de introdução -->
+
+      <!-- ======== CARDS DE RECURSOS ======== -->
+      <div class="features-row"> <!-- linha com três colunas de recursos -->
+        
+        <article class="feature-card"> <!-- primeiro card -->
+          <img src="../../public/img/destinoinspirador.png" alt="Mapa" /> <!-- imagem ilustrativa -->
+          <div class="feature-text">
+            <h3>Destinos inspiradores</h3> <!-- título do card -->
+            <p>Explore opções que se encaixam no seu orçamento e estilo.</p> <!-- descrição curta -->
+          </div>
+        </article>
+
+        <article class="feature-card"> <!-- segundo card -->
+          <img src="../../public/img/acomodacao.jpg" alt="Cidade" /> <!-- imagem ilustrativa -->
+          <div class="feature-text">
+            <h3>Acomodações acessíveis</h3> <!-- título -->
+            <p>Conforto e qualidade sem pesar no bolso.</p>
+          </div>
+        </article>
+
+        <article class="feature-card"> <!-- terceiro card -->
+          <img src="../../public/img/transporte.jpeg" alt="Avião" /> <!-- imagem ilustrativa -->
+          <div class="feature-text">
+            <h3>Transporte prático</h3>
+            <p>Compare as opções de forma simples e rápida.</p>
+          </div>
+        </article>
+
+      </div> <!-- fim da linha de recursos -->
+    </div>
+  </section>
+
+  <!-- ==================== SEÇÃO LARANJA (CHAMADA PARA AÇÃO) ==================== -->
+  <section class="hero-orange"> <!-- bloco com fundo colorido -->
+    <div class="container">
+      <h2>Viaje com economia e praticidade.</h2> <!-- título da seção -->
+      <p>Descubra destinos acessíveis com a nossa plataforma.</p> <!-- texto curto -->
+      <a class="btn-cta-outline" href="planejar.html" id="ctaComecar">Explorar</a> <!-- botão que leva à página de planejamento -->
+    </div>
+  </section>
+
+  <!-- ==================== SEÇÃO SOBRE (ABOUT) ==================== -->
+  <section class="about"> <!-- área com informações sobre o Explora -->
+    <div class="container about-grid"> <!-- layout em grade -->
+      <div>
+        <h2>Descubra o mundo com Explora</h2> <!-- título principal da seção -->
+        <div class="cols-2"> <!-- duas colunas de informações -->
+          <div>
+            <h4>Viagens acessíveis para todos</h4>
+            <p>
+              No Explora você encontra informações práticas numa plataforma
+              simples de usar.
+            </p>
+          </div>
+          <div>
+            <h4>Planeje sua próxima aventura</h4>
+            <p>
+              Explore destinos, acomodações e transportes que cabem no seu
+              orçamento.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- imagem ilustrativa à direita -->
+      <img
+        src="../../public/img/viajante.png"
+        class="about-img"
+        alt="Viajante nas montanhas"
+      />
+    </div>
+  </section>
+
+  <!-- ==================== SEÇÃO DE DEPOIMENTOS ==================== -->
+  <section class="testimonials" aria-label="Depoimentos"> <!-- área de comentários dos usuários -->
+    <div class="testimonials-overlay"> <!-- sobreposição de cor/fundo -->
+      <div class="container testimonials-grid"> <!-- organiza os depoimentos em grade -->
+        
+        <blockquote> <!-- primeiro depoimento -->
+          <div class="stars">★★★★★</div> <!-- nota em estrelas -->
+          <p>
+            A experiência com o Explora foi incrível! Preços acessíveis e
+            ótimas acomodações.
+          </p>
+          <cite>Maria Silva</cite> <!-- nome da pessoa -->
+        </blockquote>
+
+        <blockquote> <!-- segundo depoimento -->
+          <div class="stars">★★★★★</div>
+          <p>
+            Navegação simples, encontrei tudo que precisava para viajar com
+            economia.
+          </p>
+          <cite>João Souza</cite>
+        </blockquote>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== RODAPÉ E SCRIPTS ==================== -->
+  <!-- o footer comum e o script principal vêm do rodapé -->
+  <script src="../script/auth.js"></script> <!-- script que gerencia autenticação/login -->
+</body>
+</html>

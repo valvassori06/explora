@@ -1,0 +1,133 @@
+<!DOCTYPE html> <!-- documento HTML5 -->
+<html lang="pt-BR"> <!-- idioma principal: português do Brasil -->
+<head>
+  <meta charset="UTF-8" /> <!-- suporte a acentos e caracteres especiais -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- layout responsivo em telas pequenas -->
+  <title>Explora – Roteiros</title> <!-- título da aba do navegador -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" /> <!-- otimiza conexão com Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> <!-- habilita cache/uso entre domínios -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" /> <!-- fonte Poppins -->
+  <link rel="stylesheet" href="../styles/roteiros.css" /> <!-- estilos específicos desta página -->
+</head>
+
+<body>
+  <!-- ===== TOPO (logo + navegação) ===== -->
+  <header class="topbar"> <!-- barra fixa no topo com fundo -->
+    <img class="logo" src="../../public/logos/llogo.png" alt="Logo Explora" /> <!-- logomarca -->
+    <nav class="navegacao" aria-label="Navegação principal"> <!-- menu principal do site -->
+      <a href="index.html" class="btn-link">Início</a> <!-- link para a home -->
+      <a href="planejar.html" class="btn-link">Planejar</a> <!-- link para planejar -->
+      <a href="roteiros.html" class="btn-link active">Roteiros</a> <!-- página atual (ativa) -->
+      <a href="cadastro.html" class="btn-cadastro">Cadastre-se ou faça login</a> <!-- CTA de cadastro/login -->
+    </nav>
+  </header>
+
+  <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+  <main class="roteiros-page"> <!-- wrapper com largura máxima e padding -->
+    <!-- HERO (introdução do recurso) -->
+    <section class="hero"> <!-- bloco destaque com título e descrição -->
+      <p class="hero-kicker">Explora roteiros</p> <!-- etiqueta pequena acima do título -->
+      <h1>Monte um roteiro com a sua cara</h1> <!-- título principal da página -->
+      <p class="hero-description">
+        Escolha a cidade, defina o estilo da viagem e selecione quantos dias deseja ficar.
+        Se optar por <strong>Todos</strong>, misturamos relaxamento, aventura e cultura em uma experiência equilibrada.
+      </p> <!-- texto descritivo do funcionamento -->
+    </section>
+
+    <!-- PASSOS DE CONFIGURAÇÃO DO ROTEIRO -->
+    <section class="steps" aria-label="Configurações do roteiro"> <!-- grid com os quatro passos -->
+      <div class="step"> <!-- passo 1: cidade -->
+        <div class="step-header"> <!-- cabeçalho do passo (número + título) -->
+          <span class="step-number">1</span> <!-- número do passo -->
+          <h2>Selecione a cidade</h2> <!-- título do passo -->
+        </div>
+        <p class="step-description">Busque destinos disponíveis para descobrir experiências recomendadas.</p> <!-- instrução -->
+        <label class="sr-only" for="cidadeSelect">Cidade</label> <!-- rótulo apenas para leitores de tela -->
+        <select id="cidadeSelect"> <!-- select preenchido via JS com as cidades -->
+          <option value="">Selecione uma cidade</option> <!-- opção neutra inicial -->
+        </select>
+      </div>
+
+      <div class="step"> <!-- passo 2: tipo de viagem -->
+        <div class="step-header">
+          <span class="step-number">2</span>
+          <h2>Tipo de viagem</h2>
+        </div>
+        <p class="step-description">Escolha o clima da experiência para personalizarmos as sugestões.</p>
+        <label class="sr-only" for="tipoSelect">Tipo de viagem</label> <!-- acessibilidade -->
+        <select id="tipoSelect"> <!-- select dos estilos (relax, aventura, etc.) -->
+          <option value="">Selecione o tipo</option>
+          <option value="relax">Relaxante</option>
+          <option value="aventura">Aventura</option>
+          <option value="historico">Histórica/Cultural</option>
+          <option value="todos">Todos</option> <!-- mistura as categorias -->
+        </select>
+      </div>
+
+      <div class="step"> <!-- passo 3: número de dias -->
+        <div class="step-header">
+          <span class="step-number">3</span>
+          <h2>Quantos dias?</h2>
+        </div>
+        <p class="step-description">Defina a duração para equilibrarmos as atividades ao longo do roteiro.</p>
+        <label class="sr-only" for="diasInput">Número de dias</label> <!-- acessibilidade -->
+        <input type="number" id="diasInput" min="1" value="5" /> <!-- quantidade de dias (mínimo 1) -->
+      </div>
+
+      <div class="step step-actions"> <!-- passo 4: gerar -->
+        <div class="step-header">
+          <span class="step-number">4</span>
+          <h2>Gerar roteiro</h2>
+        </div>
+        <p class="step-description">Clique para montar o plano completo com base nas escolhas acima.</p>
+        <button class="btn-primary" id="gerarBtn">Gerar roteiro</button> <!-- aciona a criação do itinerário -->
+      </div>
+    </section>
+
+    <!-- ITINERÁRIO GERADO (RESULTADO) -->
+    <section class="itinerario" aria-live="polite" aria-label="Roteiro gerado"> <!-- área onde o roteiro aparece -->
+      <h2 class="section-title">Seu itinerário personalizado</h2> <!-- título da seção -->
+      <div id="itinerarioContainer" class="itinerario-container"> <!-- container que recebe os cards de dias -->
+        <div class="empty-msg"> <!-- mensagem inicial (antes de gerar) -->
+          <h3>Nenhum roteiro ainda</h3> <!-- título da mensagem -->
+          <p>Preencha as informações e clique em “Gerar roteiro” para descobrir uma sugestão completa de atividades.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- CHAMADA FINAL (botão concluir) -->
+  <div class="finish-cta"> <!-- bloco centralizado com CTA grande -->
+    <button id="btnConcluirRoteiro" class="btn-finish" type="button">Concluir roteiro</button> <!-- leva ao feedback -->
+  </div>
+
+  <!-- RODAPÉ -->
+  <footer class="site-footer"> <!-- rodapé simples -->
+    <p>&copy; <span data-year></span> Explora. Todos os direitos reservados.</p> <!-- ano preenchido via JS -->
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="../script/roteirosData.js"></script> <!-- base de dados (atividades por cidade/tipo) -->
+  <script src="../script/roteiros.js"></script> <!-- lógica: preencher selects, gerar cards, resolver imagens -->
+  <script>
+    const yearEl = document.querySelector('[data-year]'); // seleciona o span do ano
+    if (yearEl) yearEl.textContent = new Date().getFullYear(); // escreve o ano atual no rodapé
+  </script>
+  <script src="../script/auth.js"></script> <!-- integrações de autenticação (opcional) -->
+  <script>
+    // Ao carregar a página, ativa o botão "Concluir roteiro"
+    document.addEventListener('DOMContentLoaded', function(){
+      const button = document.getElementById('btnConcluirRoteiro'); // pega o botão final
+      if (button) {
+        button.addEventListener('click', function(){ // no clique...
+          if (window.ExploraAuth) { // se existir módulo de auth
+            ExploraAuth.setRouteDone(true); // marca que o roteiro foi concluído (para fluxo do app)
+          }
+          window.location.href = 'feedback.html'; // redireciona para a página de feedback
+        });
+      }
+    });
+  </script>
+</body>
+</html>

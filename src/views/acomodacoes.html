@@ -1,0 +1,76 @@
+<!DOCTYPE html> <!-- define o tipo de documento como HTML5 -->
+<html lang="pt-BR"> <!-- idioma principal da página -->
+
+<head> <!-- cabeçalho com meta e links -->
+  <meta charset="UTF-8"> <!-- codificação de caracteres (acentos corretos) -->
+  <meta name="viewport" content="width=device-width,initial-scale=1"> <!-- torna a página responsiva no mobile -->
+  <title>Explora — Acomodações</title> <!-- título exibido na aba do navegador -->
+  <link rel="stylesheet" href="styles.css"> <!-- link para o arquivo de estilos -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet"> <!-- fonte Poppins -->
+</head>
+
+<body> <!-- início do conteúdo visível -->
+
+  <!-- header comum --> <!-- aqui entraria seu cabeçalho reutilizável (logo, menu, etc.) -->
+
+  <section class="section container"> <!-- seção principal com largura limitada e espaçamento -->
+    <h2>Acomodações Acessíveis</h2> <!-- título da seção -->
+
+    <article class="hotel-card"> <!-- card de acomodação (hotel) -->
+      <img src="../../public/img/acomodacao.jpg" alt="Hotel com piscina"> <!-- imagem da acomodação (alt descritivo) -->
+      <div class="hotel-info"> <!-- bloco de informações do card -->
+        <h3>Hotel — por noite</h3> <!-- subtítulo do card -->
+        <p>Comodidade, conforto, serviços e ótima localização. Recepção 24h, limpeza diária e café da manhã.</p> <!-- descrição -->
+      </div>
+      <div class="hotel-price"> <!-- bloco com preço e ação -->
+        <strong>R$ 350,00</strong> <!-- preço da diária -->
+        <button class="btn-blue">Reservar</button> <!-- botão de ação (estilo azul) -->
+      </div>
+    </article>
+
+    <article class="hotel-card"> <!-- card de acomodação (pousada) -->
+      <img src="../../public/img/pousada.jpg" alt="Pousada aconchegante"> <!-- imagem da pousada -->
+      <div class="hotel-info"> <!-- informações da pousada -->
+        <h3>Pousada — por noite</h3> <!-- subtítulo -->
+        <p>Perfeita para casais. Conforto, charme e ambiente tranquilo.</p> <!-- breve descrição -->
+      </div>
+      <div class="hotel-price"> <!-- preço + botão -->
+        <strong>R$ 200,00</strong> <!-- valor por noite -->
+        <button class="btn-blue">Reservar</button> <!-- CTA para reservar -->
+      </div>
+    </article>
+
+    <article class="hotel-card"> <!-- card de acomodação (casa/aluguel) -->
+      <img src="../../public/img/villa.jpg" alt="Casa moderna com piscina"> <!-- imagem da casa -->
+      <div class="hotel-info"> <!-- informações da casa -->
+        <h3>Alugar Casa — por pessoa</h3> <!-- subtítulo -->
+        <p>Ideal para famílias e grupos. Economia ao cozinhar em casa e curtir o espaço.</p> <!-- benefícios -->
+      </div>
+      <div class="hotel-price"> <!-- preço + ação -->
+        <strong>R$ 150,00</strong> <!-- valor por pessoa -->
+        <button class="btn-blue">Reservar</button> <!-- botão de reserva -->
+      </div>
+    </article>
+  </section>
+
+  <section class="testimonials" aria-label="Depoimentos"> <!-- seção de depoimentos (acessível com aria-label) -->
+    <div class="testimonials-overlay"> <!-- camada com fundo/efeito por trás dos depoimentos -->
+      <div class="container testimonials-grid"> <!-- grid com largura limitada para os blocos -->
+        <blockquote> <!-- citação de cliente -->
+          <div class="stars">★★★★★</div> <!-- estrelas de avaliação -->
+          <p>Achei acomodações ótimas e baratas!</p> <!-- texto do depoimento -->
+          <cite>Maria Silva</cite> <!-- autor do depoimento -->
+        </blockquote>
+        <blockquote> <!-- segunda citação -->
+          <div class="stars">★★★★★</div> <!-- estrelas -->
+          <p>Foi simples reservar e comparar preços.</p> <!-- texto -->
+          <cite>João Souza</cite> <!-- autor -->
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer comum --> <!-- aqui entra seu rodapé reutilizável -->
+
+</body>
+</html>

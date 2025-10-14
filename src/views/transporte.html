@@ -1,0 +1,84 @@
+<!DOCTYPE html> <!-- define que o documento segue o padrão HTML5 -->
+<html lang="pt-BR"> <!-- idioma da página -->
+<head>
+  <meta charset="UTF-8"> <!-- suporta acentuação e caracteres especiais -->
+  <meta name="viewport" content="width=device-width,initial-scale=1"> <!-- layout responsivo -->
+  <title>Explora — Transporte</title> <!-- título da aba do navegador -->
+
+  <link rel="stylesheet" href="styles.css"> <!-- estilos principais do site -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet"> <!-- fonte Poppins -->
+</head>
+<body>
+  <!-- ===== HEADER COMUM (menu superior do site) ===== -->
+  <!-- normalmente aqui entraria o mesmo cabeçalho usado nas outras páginas -->
+  <!-- exemplo:
+  <header>
+    <img class="logo" src="../../public/logos/llogo.png" alt="Logo Explora" />
+    <nav class="navegacao">
+      <a href="index.html" class="btn-link">Início</a>
+      <a href="planejar.html" class="btn-link">Planejar</a>
+      <a href="roteiros.html" class="btn-link">Roteiros</a>
+      <a href="cadastro.html" class="btn-cadastro">Login</a>
+    </nav>
+  </header>
+  -->
+  <!-- fim do header -->
+
+  <!-- ===== SEÇÃO PRINCIPAL: TRANSPORTE ===== -->
+  <section class="transport-section"> <!-- bloco principal da página -->
+    <div class="container transport-grid"> <!-- grid que organiza os cards -->
+      
+      <div class="transport-intro"> <!-- introdução com título e descrição -->
+        <h2>Transporte</h2> <!-- título principal -->
+        <p>Descubra opções acessíveis para sua viagem econômica e prática.</p> <!-- subtítulo descritivo -->
+      </div>
+
+      <!-- CARD 1: Avião -->
+      <div class="transport-card"> <!-- bloco de conteúdo individual -->
+        <img src="../../public/img/plane.jpg" alt="Avião"> <!-- imagem ilustrativa -->
+        <h4>Avião</h4> <!-- título do card -->
+        <p>Tarifas promocionais para diversos destinos.</p> <!-- breve descrição -->
+        <div class="price-row"><strong>R$ 250,00</strong></div> <!-- preço exibido -->
+      </div>
+
+      <!-- CARD 2: Carro -->
+      <div class="transport-card">
+        <img src="../../public/img/car.jpg" alt="Carro"> <!-- imagem do carro -->
+        <h4>Aluguel de carro por dia</h4>
+        <p>Flexibilidade total para o seu roteiro.</p>
+        <div class="price-row"><strong>R$ 150,00</strong></div>
+      </div>
+
+      <!-- CARD 3: Ônibus -->
+      <div class="transport-card">
+        <img src="../../public/img/bus.jpg" alt="Ônibus"> <!-- imagem do ônibus -->
+        <h4>Passagem de ônibus</h4>
+        <p>Viaje com conforto e economia.</p>
+        <div class="price-row"><strong>R$ 110,00</strong></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== SEÇÃO DE DEPOIMENTOS ===== -->
+  <section class="testimonials alt" aria-label="Depoimentos"> <!-- área de feedback dos usuários -->
+    <div class="testimonials-overlay"> <!-- camada com fundo decorativo -->
+      <div class="container testimonials-grid"> <!-- grid para organizar os depoimentos -->
+        
+        <blockquote> <!-- citação de um usuário -->
+          <div class="stars">★★★★★</div> <!-- avaliação com estrelas -->
+          <p>Opções claras sobre transporte e destinos.</p> <!-- texto do depoimento -->
+          <cite>Maria Silva</cite> <!-- autor -->
+        </blockquote>
+
+        <blockquote>
+          <div class="stars">★★★★★</div>
+          <p>Muito prático e direto!</p>
+          <cite>João Souza</cite>
+        </blockquote>
+
+      </div>
+    </div>
+  </section>
+</body>
+</html>

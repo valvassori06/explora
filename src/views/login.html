@@ -1,0 +1,76 @@
+<!DOCTYPE html> <!-- define o documento como HTML5 -->
+<html lang="en"> <!-- idioma da página (en = inglês) -->
+
+<head> <!-- metadados e importações -->
+    <meta charset="UTF-8"> <!-- suporte a acentos e caracteres especiais -->
+    <meta name="viewport" content="width=1.0, initial-scale=1.0"> <!-- controle do zoom no mobile (corrigir: use width=device-width) -->
+    <title>Documento</title> <!-- título mostrado na aba do navegador -->
+
+	<link rel="stylesheet" href="../styles/cadastro.css"> <!-- CSS específico da tela de cadastro/login -->
+    <script src="../script/cadastro.js" defer></script> <!-- JS de comportamento (defer = roda após carregar o HTML) -->
+	<link rel="stylesheet" href="../styles/styles.css"> <!-- CSS global do site -->
+</head>
+
+<body> <!-- conteúdo visível da página -->
+<div class="container" id="container"> <!-- container principal que agrupa formulários e overlay -->
+	
+	<div class="form-container sign-up-container"> <!-- painel: formulário de cadastro -->
+		<a href="index.html" class="btn-cadastro">voltar</a> <!-- link para voltar à página inicial -->
+		<form action="#"> <!-- formulário (action '#' apenas demonstração) -->
+			<h1>Criar conta</h1> <!-- título do painel de cadastro -->
+
+			<div class="social-container"> <!-- área com botões/ícones de redes sociais -->
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a> <!-- login via Facebook -->
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a> <!-- login via Google+ (corrigir: use fa-google, Google+ foi descontinuado) -->
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a> <!-- login via LinkedIn -->
+			</div>
+
+			<span>Ou utilize seu email para login</span> <!-- texto auxiliar/explicação -->
+
+			<input type="text" placeholder="Nome" /> <!-- campo para nome -->
+			<input type="email" placeholder="Email" /> <!-- campo de e-mail com validação básica -->
+			<input type="Senha" placeholder="Senha" /> <!-- campo de senha (corrigir: use type="password") -->
+			<button>Cadastre-se </button> <!-- botão para enviar cadastro -->
+		</form>
+	</div>
+
+	<div class="form-container sign-in-container"> <!-- painel: formulário de login -->
+		<a href="index.html" class="btn-cadastro">voltar</a> <!-- link para voltar -->
+		<form action="#"> <!-- formulário de login (demonstração) -->
+			<h1>Login</h1> <!-- título do painel de login -->
+
+			<div class="social-container"> <!-- opções de login social -->
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a> <!-- Facebook -->
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a> <!-- Google+ (corrigir: use fa-google) -->
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a> <!-- LinkedIn -->
+			</div>
+
+			<span>Ou use sua conta</span> <!-- texto auxiliar -->
+
+			<input type="email" placeholder="Email" /> <!-- campo e-mail -->
+			<input type="password" placeholder="Senha" /> <!-- campo senha (oculta caracteres) -->
+			<a href="#">Esqueceu sua senha?</a> <!-- link para recuperação de senha -->
+			<button>Login</button> <!-- botão para entrar -->
+		</form>
+	</div>
+
+	<div class="overlay-container"> <!-- container do overlay (camada que anima entre os painéis) -->
+		<div class="overlay"> <!-- faixa visual que desliza e mostra mensagens -->
+			<div class="overlay-panel overlay-left"> <!-- painel do lado esquerdo (mostra quando login é foco) -->
+				<h1>Bem vindo de volta!</h1> <!-- título amigável -->
+				<p>Para continuar conectado conosco, favor realizar login!</p> <!-- mensagem de apoio -->
+				<button class="ghost" id="signIn">Login</button> <!-- botão que ativa o painel de login (JS alterna classes) -->
+			</div>
+
+			<div class="overlay-panel overlay-right"> <!-- painel do lado direito (mostra quando cadastro é foco) -->
+				<h1>Olá, amigo!</h1> <!-- título acolhedor -->
+				<p>Preencha com suas informações para começar sua jornada!</p> <!-- mensagem de apoio -->
+				<button class="ghost" id="signUp">Cadastre-se</button> <!-- botão que ativa o painel de cadastro -->
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="../script/auth.js"></script> <!-- script auxiliar (ex.: autenticação/validações extras) -->
+</body>
+</html>
