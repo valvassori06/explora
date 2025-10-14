@@ -1,15 +1,58 @@
 // Espera todo o conteúdo da página carregar antes de rodar o script
 document.addEventListener('DOMContentLoaded', () => {
 
+  // ===== util: busca CEP (ViaCEP + fallback) =====
+  async function buscarCEPAny(cepInput) {
+    const cep = String(cepInput || '').replace(/\D/g, '');
+    if (cep.length !== 8) throw new Error('CEP inválido. Digite 8 números.');
+
+    // 1) ViaCEP
+    try {
+      const r = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      if (!r.ok) throw new Error('Falha ViaCEP');
+      const d = await r.json();
+      if (d.erro) throw new Error('CEP não encontrado');
+      return {
+        cep: d.cep,
+        logradouro: d.logradouro || '',
+        bairro: d.bairro || '',
+        cidade: d.localidade || '',
+        uf: d.uf || ''
+      };
+    } catch (_) { /* tenta fallback */ }
+
+    // 2) Fallback: AwesomeAPI
+    const r2 = await fetch(`https://cep.awesomeapi.com.br/json/${cep}`);
+    if (!r2.ok) throw new Error('CEP não encontrado no momento');
+    const d2 = await r2.json();
+    return {
+      cep: d2.cep || cep,
+      logradouro: d2.address || '',
+      bairro: d2.district || '',
+      cidade: d2.city || '',
+      uf: d2.state || ''
+    };
+  }
+
+  // ===== util: geocodifica cidade/UF para lat/lon (Nominatim/OSM) =====
+  async function geocodeCityUF(cidade, uf) {
+    const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&country=Brazil&city=${encodeURIComponent(cidade)}&state=${encodeURIComponent(uf)}`;
+    const r = await fetch(url, {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!r.ok) throw new Error('Falha ao geocodar origem');
+    const arr = await r.json();
+    if (!arr?.length) throw new Error('Origem não encontrada para geocodificação');
+    return { lat: parseFloat(arr[0].lat), lon: parseFloat(arr[0].lon) };
+  }
+
   // Cria um objeto (tipo uma lista organizada) com as cidades e seus dados
   const destinos = {
-    // Cada cidade tem latitude, longitude, hotéis, casas e dicas de passeios
     'Foz do Iguaçu': { lat:-25.5161, lon:-54.5850,
       hotels:[{nome:'Hotel Cataratas',preco:300},{nome:'Eco Hotel',preco:250},{nome:'Pousada das Águas',preco:200}],
       casas:[{nome:'Casa Iguaçu',preco:180},{nome:'Apto Centro',preco:150},{nome:'Casa das Flores',preco:220}],
       dicas:['Cataratas do Iguaçu','Passeio de barco','Parque das Aves','Itaipu'] },
 
-    // Repete a estrutura para cada destino
     'Curitiba': { lat:-25.4284, lon:-49.2733,
       hotels:[{nome:'Hotel Jardim Botânico',preco:220},{nome:'Curitiba Palace',preco:280},{nome:'Pousada do Centro',preco:180}],
       casas:[{nome:'Casa Batel',preco:160},{nome:'Apto Centro Cívico',preco:140},{nome:'Casa Vista Alegre',preco:170}],
@@ -79,55 +122,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Preenche o menu de seleção de destinos com as cidades do objeto
   Object.keys(destinos).forEach(c=>{
-    const op=document.createElement('option'); // cria um item de opção
-    op.value=c; // define o valor
-    op.textContent=c; // define o texto exibido
-    destinoSelect.appendChild(op); // adiciona no menu
+    const op=document.createElement('option');
+    op.value=c;
+    op.textContent=c;
+    destinoSelect.appendChild(op);
   });
 
-  // Função para calcular a distância entre duas cidades usando a fórmula de Haversine (distância entre coordenadas)
+  // Função para calcular a distância entre duas cidades (Haversine)
   function distanciaKm(a,b){
-    const R=6371; // raio da Terra em km
-    const dLat=(b.lat-a.lat)*Math.PI/180; // diferença de latitude em radianos
-    const dLon=(b.lon-a.lon)*Math.PI/180; // diferença de longitude em radianos
+    const R=6371;
+    const dLat=(b.lat-a.lat)*Math.PI/180;
+    const dLon=(b.lon-a.lon)*Math.PI/180;
     const s1=Math.sin(dLat/2)**2 + Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLon/2)**2;
-    return R*2*Math.atan2(Math.sqrt(s1),Math.sqrt(1-s1)); // resultado final em km
+    return R*2*Math.atan2(Math.sqrt(s1),Math.sqrt(1-s1));
   }
 
-  // Define a cidade de origem padrão (fallback = valor usado caso não ache outro)
-  let origem={cidade:'São Paulo', lat:-23.5505, lon:-46.6333};
+  // Origem “vazia” até o usuário informar o CEP
+  let origem={cidade:'', uf:'', lat:null, lon:null};
 
-  // Ao clicar no botão de buscar CEP, executa essa função assíncrona (async = que espera a resposta)
+  // Ao clicar no botão de buscar CEP
   buscarCepBtn.addEventListener('click', async ()=>{
-    const cep = (cepInput.value||'').replace(/\D/g,''); // pega o CEP e tira tudo que não é número
-    if(cep.length!==8){ // verifica se tem 8 números
-      enderecoInfo.textContent='CEP inválido. Digite 8 números.';
-      enderecoInfo.style.color='#b91c1c';
-      return; // sai da função
-    }
     try{
-      // Busca os dados do CEP no site ViaCEP (API pública)
-      const r=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-      const j=await r.json(); // transforma a resposta em JSON (formato de dados)
-      if(j.erro) throw new Error('CEP não encontrado'); // caso o CEP não exista
+      enderecoInfo.style.color='#374151';
+      enderecoInfo.textContent='Buscando endereço...';
 
-      // Atualiza a cidade de origem com o nome do local retornado
-      origem.cidade=j.localidade||'São Paulo';
-      // Se essa cidade estiver na lista de destinos, pega as coordenadas
-      if(destinos[origem.cidade]){
-        origem.lat=destinos[origem.cidade].lat;
-        origem.lon=destinos[origem.cidade].lon;
-      }
+      const end = await buscarCEPAny(cepInput.value);
 
       // Mostra o endereço na tela
-      enderecoInfo.textContent=`Endereço: ${(j.logradouro||'')} ${(j.bairro||'')} - ${j.localidade}/${j.uf}`;
-      enderecoInfo.style.color='#065f46'; // cor verde
+      enderecoInfo.textContent = `Endereço: ${end.logradouro} ${end.bairro? '— '+end.bairro:''} - ${end.cidade}/${end.uf}`;
+      enderecoInfo.style.color = '#065f46';
+
+      // Atualiza cidade/UF
+      origem.cidade = end.cidade;
+      origem.uf = end.uf;
+
+      // Se a cidade estiver na lista de destinos, pega as coordenadas conhecidas
+      if(destinos[origem.cidade]){
+        origem.lat = destinos[origem.cidade].lat;
+        origem.lon = destinos[origem.cidade].lon;
+      }else{
+        // Geocoda cidade/UF para lat/lon (para cálculo de distância funcionar para qualquer lugar)
+        try{
+          const {lat, lon} = await geocodeCityUF(origem.cidade, origem.uf);
+          origem.lat = lat; origem.lon = lon;
+        }catch{
+          // Se não conseguir geocodar, mantém sem coordenadas (o módulo de transporte se ajusta)
+          origem.lat = null; origem.lon = null;
+        }
+      }
+
     }catch(e){
-      // Se der erro, usa São Paulo como exemplo
-      enderecoInfo.textContent='Não foi possível consultar o CEP agora. Usando São Paulo como origem (exemplo).';
-      enderecoInfo.style.color='#b45309'; // cor laranja
+      enderecoInfo.textContent='Não foi possível consultar esse CEP agora. Tente novamente em instantes.';
+      enderecoInfo.style.color='#b45309';
+      // não força fallback para São Paulo
     }
-    stepDestination.style.display='block'; // mostra o próximo passo (escolher destino)
+    stepDestination.style.display='block';
   });
 
   // Quando o usuário escolhe um destino, mostra o passo de hospedagem
@@ -137,79 +186,84 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Função que mostra os resultados de hospedagem
   function renderHospedagens(tipo,noites){
-    const d=destinos[destinoSelect.value]; // pega o destino escolhido
-    if(!d) return; // se não tiver destino, sai
-    // Cria a lista com nome e preço multiplicado pelo número de noites
+    const d=destinos[destinoSelect.value];
+    if(!d) return;
     const lista=(tipo==='casa'? d.casas : d.hotels)
       .map(h=>`<li><span>${h.nome}</span><span>R$ ${(h.preco*noites).toFixed(2)}</span></li>`).join('');
-    hospedagemResultados.innerHTML=`<h4>Opções:</h4><ul>${lista}</ul>`; // mostra no HTML
-    stepTransport.style.display='block'; // mostra o passo de transporte
+    hospedagemResultados.innerHTML=`<h4>Opções:</h4><ul>${lista}</ul>`;
+    stepTransport.style.display='block';
   }
 
-  // Liga os botões de hospedagem (hotel ou casa)
+  // Liga os botões de hospedagem
   document.querySelectorAll('.stayBtn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      const noites=Math.max(1,parseInt(noitesInput.value||'1',10)); // pega o número de noites
-      renderHospedagens(btn.dataset.type,noites); // chama a função com o tipo escolhido
+      const noites=Math.max(1,parseInt(noitesInput.value||'1',10));
+      renderHospedagens(btn.dataset.type,noites);
     });
   });
 
   // Função para calcular e mostrar o transporte
   function renderTransporte(tipo){
     const d=destinos[destinoSelect.value]; if(!d) return;
-    const km=distanciaKm({lat:origem.lat,lon:origem.lon},{lat:d.lat,lon:d.lon}); // calcula distância
-    const pessoas=Math.max(1,parseInt(numPessoasInput.value||'1',10)); // pega o número de pessoas
-    let valor=0,detalhe=''; // cria variáveis para preço e descrição
 
-    // Se o transporte for carro
+    // Se não temos coordenadas da origem, avisa e não calcula a distância
+    if (origem.lat == null || origem.lon == null){
+      transporteResultados.innerHTML =
+        `<p>Para estimar o transporte, informe um CEP válido para definirmos sua origem no mapa.</p>`;
+      stepSummary.style.display='block';
+      return;
+    }
+
+    const km=distanciaKm({lat:origem.lat,lon:origem.lon},{lat:d.lat,lon:d.lon});
+    const pessoas=Math.max(1,parseInt(numPessoasInput.value||'1',10));
+    let valor=0,detalhe='';
+
     if(tipo==='carro'){
       const aluguel=150, consumoKmL=12, gasolina=6.5;
       const noites=Math.max(1,parseInt(noitesInput.value||'1',10));
-      const dias=noites+1; // conta os dias da viagem
-      const idaVolta=km*2; // ida e volta
-      const litros=idaVolta/consumoKmL; // calcula combustível
-      valor=(aluguel*dias)+(litros*gasolina); // valor total
+      const dias=noites+1;
+      const idaVolta=km*2;
+      const litros=idaVolta/consumoKmL;
+      valor=(aluguel*dias)+(litros*gasolina);
       detalhe=`Aluguel ${dias} dia(s) + gasolina p/ ${idaVolta.toFixed(0)} km.`;
     }
-    // Se for ônibus
     else if(tipo==='onibus'){
       const tarifaKm=0.35;
       valor=km*2*tarifaKm*pessoas;
       detalhe=`Ônibus ida/volta para ${pessoas} pessoa(s).`;
     }
-    // Se for avião
     else{
       const base=250;
       valor=base*pessoas;
       detalhe=`Aéreo promocional (simulado) para ${pessoas} pessoa(s).`;
     }
 
-    const porPessoa=valor/pessoas; // divide o valor total por pessoa
-    // Mostra o resultado no HTML
-    transporteResultados.innerHTML=`<ul><li><span>${tipo.toUpperCase()}</span><span>R$ ${valor.toFixed(2)} (R$ ${porPessoa.toFixed(2)}/pessoa)</span></li></ul><p>${detalhe}</p>`;
-    stepSummary.style.display='block'; // mostra o resumo final
+    const porPessoa=valor/pessoas;
+    transporteResultados.innerHTML=
+      `<ul><li><span>${tipo.toUpperCase()}</span><span>R$ ${valor.toFixed(2)} (R$ ${porPessoa.toFixed(2)}/pessoa)</span></li></ul><p>${detalhe}</p>`;
+    stepSummary.style.display='block';
   }
 
-  // Liga os botões de transporte (carro, ônibus, avião)
+  // Liga os botões de transporte
   document.querySelectorAll('.transportBtn').forEach(btn=>{
     btn.addEventListener('click',()=>renderTransporte(btn.dataset.type));
   });
 
-  // Observa quando o resumo for exibido (MutationObserver = observa mudanças no HTML)
+  // Observa quando o resumo for exibido
   const observer=new MutationObserver(()=>{
     if(stepSummary.style.display==='block'){
       const destino=destinoSelect.value; if(!destino) return;
       const noites=Math.max(1,parseInt(noitesInput.value||'1',10));
 
-      // Mostra o resumo das escolhas (origem, destino e noites)
-      resumoDiv.innerHTML=`<p><strong>Origem:</strong> ${origem.cidade}</p><p><strong>Destino:</strong> ${destino}</p><p><strong>Noites:</strong> ${noites}</p>`;
+      resumoDiv.innerHTML=
+        `<p><strong>Origem:</strong> ${origem.cidade || '—'}/${origem.uf || '—'}</p>
+         <p><strong>Destino:</strong> ${destino}</p>
+         <p><strong>Noites:</strong> ${noites}</p>`;
 
-      // Mostra as dicas turísticas do destino
       dicasDiv.innerHTML=`<p><strong>Lugares turísticos da cidade</strong></p>
       <ul style="padding-left: 2vh;">${destinos[destino].dicas.map(d=>`<li>${d}</li>`).join('')}</ul>`;
     }
   });
 
-  // Ativa o observador para monitorar mudanças no estilo do resumo (para saber quando aparece)
   observer.observe(stepSummary,{attributes:true,attributeFilter:['style']});
 });
