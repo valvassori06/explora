@@ -1,6 +1,6 @@
 # TODO List
 
-- [ ] Task 1: puxar os ceps de outros estados
+- [X] Task 1: puxar os ceps de outros estados
 - [X] Task 2: ajustar o header 
 - [ ] Task 3: fazer o banco de dados do login
 - [ ] Task 4: quando mudar a quantidade de pessoas no explorar, atualizar automaticamente o preço
