@@ -16,6 +16,44 @@
   --ring: 0 0 0 4px rgba(59, 199, 196, 0.22);
   color-scheme: light;
 }
+@keyframes floatLogo{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}} 
+
+@media (max-width:960px){ header .logo{display:block; height:48px} }
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important}
+  header .logo{animation:none}
+}
+header .logo{
+  height:clamp(6px,7vw,12px);                        /* altura responsiva da logo */
+  width:auto;                                          /* mantém proporção da imagem */
+  margin:0;                                            /* remove margem */
+  filter:drop-shadow(0 16px 28px rgba(15,23,42,.32));  /* sombra projetada na logo */
+  animation:floatLogo 6s ease-in-out infinite;         /* animação de “flutuar” contínua */
+  cursor:pointer;                                      /* cursor de mão (clicável) */
+}
+@media (max-width:540px){
+  .buttons{flex-direction:column}                              /* empilha os botões */
+  .btn-outline,.btn-orange{width:100%}                         /* botões ocupam a largura total */
+  input[type="text"],input[type="number"],select{min-width:unset; flex:1 1 100%} /* inputs 100% sem mínimo */
+  .btn-cadastro,.btn-login{padding-inline:.85rem}              /* ajusta padding dos botões do header */
+}
+@media (max-width:720px){
+  header.test{padding:.9rem 1.4rem; gap:1rem; flex-wrap:wrap; justify-content:center} /* header mais compacto e centralizado */
+  .navegacao{justify-content:center}                          /* centraliza a navegação */
+  .plan-section{padding:2.2rem 1.9rem}                        /* reduz padding da seção */
+}
+header.test{
+  position:sticky; top:0; z-index:30;                  /* fixa no topo ao rolar e fica acima de outros elementos */
+  background:rgba(12,27,44,.92);                       /* fundo escuro translúcido do header */
+  backdrop-filter:blur(18px);                          /* efeito de desfoque atrás (glassmorphism) */
+  color:#f9fafb;                                       /* texto claro no header */
+  display:flex; align-items:center; justify-content:space-between; /* layout flex: logo à esquerda, nav à direita */
+  gap:clamp(1rem,3vw,2rem);                            /* espaçamento fluido entre itens */
+  padding:1rem clamp(1.4rem,4vw,3rem);                 /* padding responsivo no header */
+  box-shadow:0 18px 35px rgba(15,23,42,.24);           /* sombra inferior para destaque */
+}
+
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { min-height: 100%; }
@@ -37,42 +75,12 @@ img { display: block; max-width: 100%; }
   overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
 
-/* ====== HEADER ====== */
-header.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 30;
-  background: rgba(12, 27, 44, 0.96);
-  backdrop-filter: blur(16px);
-  color: #f9fafb;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: clamp(1rem, 3vw, 2rem);
-  padding: 1rem clamp(1.4rem, 4vw, 3rem);
-  box-shadow: 0 18px 35px rgba(15, 23, 42, 0.2);
-}
 
-/* LOGO no canto esquerdo do header */
-.topbar .logo {
-  width: clamp(150px, 10vw, 130px);
-  margin: 0;                    /* evita centralização */
-  filter: drop-shadow(0 12px 24px rgba(15, 23, 42, 0.3));
-  animation: floatLogo 6s ease-in-out infinite;
-  cursor: pointer;
-}
 
-@keyframes floatLogo {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
-}
 
-.navegacao {
-  display: flex;
-  align-items: center;
-  gap: clamp(0.5rem, 1.5vw, 1.1rem);
-  flex-wrap: wrap;
-}
+
+.navegacao{display:flex;align-items:center;gap:clamp(.55rem,1.5vw,1.1rem);flex-wrap:wrap}
+
 
 .btn-link {
   padding: 0.5rem 0.9rem;
@@ -143,7 +151,11 @@ header.topbar {
   display: grid;
   gap: 1.2rem;
 }
-
+.llogo{                                         /* altura responsiva da logo */                                       /* mantém proporção da imagem */
+  margin:0;                                            /* remove margem */
+  filter:drop-shadow(0 16px 28px rgba(15,23,42,.32));  /* sombra projetada na logo */
+  animation:floatLogo 3s ease-in-out infinite;         /* animação de "flutuar" contínua */                                   /* cursor de mão (clicável) */
+}
 .plan-handoff[hidden] { display: none; }
 
 .handoff-pill {
@@ -325,12 +337,7 @@ header.topbar {
 }
 
 @media (max-width: 720px) {
-  header.topbar {
-    padding: 0.9rem 1.4rem;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+  
   .navegacao { justify-content: center; }
   .steps { grid-template-columns: 1fr; }
 }
@@ -440,48 +447,3 @@ img {
 
 /* ====== MODO COMPACTO DE CABEÇALHO ====== */
 /* Ative com: <body class="compact-header"> na página que quiser */
-
-.compact-header header,
-.compact-header .navbar{
-  padding: 8px 14px !important;          /* era ~3.1vh 3vh / 12px 24px */
-  border-bottom: 1px solid #0e1a25;      /* fica mais “fino” */
-}
-
-/* Tamanho da logo no topo */
-.compact-header .navbar .brand .logo,
-.compact-header header .logo,
-.compact-header .logo{
-  height: 36px !important;
-  width: 36px !important;
-  object-fit: contain;
-  position: static !important;           /* evita estourar o header */
-  top: auto !important; left: auto !important; z-index: auto !important;
-}
-
-/* Espaçamento do bloco da marca e da navegação */
-.compact-header .navbar .brand{ padding: 6px 8px !important; gap: .4rem; }
-.compact-header .navbar nav{ padding: 6px 8px !important; gap: 10px; }
-
-/* “Pílulas” do menu (Início / Planejar / Roteiros) mais enxutas */
-.compact-header .navbar nav a{
-  padding: 6px 10px !important;          /* era ~12px/18px */
-  border-radius: 999px;
-}
-
-/* Botões verdes/escuros do canto (Cadastro / Login) menores */
-.compact-header .btn-link,
-.compact-header .btn-cadastro,
-.compact-header .btn-login{
-  padding: 8px 12px !important;          /* era 10px 18px */
-  border-radius: 10px !important;
-}
-
-/* Mobile ainda mais compacto */
-@media (max-width: 900px){
-  .compact-header header,
-  .compact-header .navbar{ padding: 6px 10px !important; }
-  .compact-header .navbar nav{ gap: 8px; }
-  .compact-header .navbar nav a{ padding: 6px 8px !important; }
-  .compact-header .navbar .brand .logo,
-  .compact-header header .logo{ height: 32px !important; width: 32px !important; }
-}

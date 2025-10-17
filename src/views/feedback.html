@@ -1,142 +1,40 @@
-<!DOCTYPE html> <!-- define o tipo do documento (HTML5) -->
-<html lang="pt-BR"> <!-- define o idioma principal como português do Brasil -->
-
-<head>
-  <meta charset="UTF-8" /> <!-- permite o uso de acentos e caracteres especiais -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- torna o layout responsivo -->
-  <title>Explora — Feedback</title> <!-- título exibido na aba do navegador -->
-
-  <!-- Importa o CSS da página e a fonte Poppins -->
-  <link rel="stylesheet" href="../styles/feedback.css" /> <!-- arquivo de estilo específico do feedback -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" /> <!-- fonte Poppins do Google Fonts -->
-</head>
-
-<body>
-  <!-- ==================== CABEÇALHO ==================== -->
-  <header>
-    <img class="logo" src="../../public/logos/llogo.png" alt="Logo Explora" /> <!-- logo do site -->
-    <nav class="navegacao"> <!-- menu de navegação -->
-      <a href="index.html">Início</a> <!-- link para a página inicial -->
-      <a href="planejar.html">Planejar</a> <!-- link para a página de planejamento -->
-      <a href="roteiros.html">Roteiros</a> <!-- link para a página de roteiros -->
-    </nav>
-  </header>
-
-  <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
-  <main>
-    <section class="card"> <!-- cartão visual central com o formulário -->
-      <span class="badge" aria-hidden="true">✨ Ouvimos a sua voz</span> <!-- selo decorativo -->
-      <h1>Queremos a sua opinião <span aria-hidden="true">💬</span></h1> <!-- título principal -->
-      <p>
-        Conte pra gente como foi sua experiência com o Explora, quais recursos você amou e o que ainda pode melhorar.
-        Nosso time lê cada feedback com carinho.
-      </p>
-
-      <!-- ===== FORMULÁRIO DE FEEDBACK ===== -->
-      <form id="feedbackForm" novalidate> <!-- formulário sem validação automática do navegador -->
-        <div class="form-row"> <!-- agrupa os campos em linha -->
-          <input type="text" id="fbNome" placeholder="Seu nome (opcional)" /> <!-- campo nome -->
-          <input type="email" id="fbEmail" placeholder="Seu e-mail (opcional)" /> <!-- campo e-mail -->
-        </div>
-
-        <textarea id="fbMensagem" placeholder="Deixe suas opiniões, sugestões e bugs encontrados..." required></textarea> <!-- campo de texto obrigatório -->
-
-        <button type="submit" class="btn">Enviar feedback</button> <!-- botão de envio -->
-
-        <!-- mensagem de sucesso oculta, aparece após o envio -->
-        <div id="fbOk" class="success" role="status" aria-live="polite">
-          Obrigada! Seu feedback foi registrado.
-        </div>
-      </form>
-    </section>
-  </main>
-
-  <!-- ==================== SCRIPTS ==================== -->
-  <script src="../script/auth.js"></script> <!-- script auxiliar (ex: controle de login) -->
-
-  <script>
-    // Salva feedback localmente no navegador (simulação de envio)
-    let successTimeout; // variável usada para esconder a mensagem após um tempo
-
-    // adiciona o evento de envio no formulário
-    document.getElementById('feedbackForm').addEventListener('submit', function (e) {
-      e.preventDefault(); // impede o recarregamento da página
-
-      // coleta os valores digitados nos campos
-      const nome = document.getElementById('fbNome').value.trim();
-      const email = document.getElementById('fbEmail').value.trim();
-      const msg = document.getElementById('fbMensagem').value.trim();
-      const success = document.getElementById('fbOk');
-
-      // se a mensagem estiver vazia, mostra alerta e interrompe o envio
-      if (!msg) {
-        alert('Escreva sua mensagem.');
-        return;
-      }
-
-      // cria um objeto com os dados preenchidos
-      const item = { nome, email, msg, ts: new Date().toISOString() };
-
-      // busca os feedbacks anteriores no armazenamento local (localStorage)
-      const arr = JSON.parse(localStorage.getItem('explora.feedback') || '[]');
-      arr.push(item); // adiciona o novo feedback no array
-
-      // salva o array atualizado de volta no localStorage
-      localStorage.setItem('explora.feedback', JSON.stringify(arr));
-
-      // mostra a mensagem de sucesso por alguns segundos
-      clearTimeout(successTimeout);
-      success.classList.add('is-visible'); // exibe a mensagem
-      successTimeout = setTimeout(() => success.classList.remove('is-visible'), 4200); // esconde depois de 4,2s
-
-      // limpa os campos do formulário
-      this.reset();
-    });
-  </script>
-</body>
-</html>
-
-<body class="compact-header">
-  ...
-</body>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Explora — Feedback</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explora — Feedback</title>
 
-  <link rel="stylesheet" href="../styles/styles.css" />
-  <link rel="stylesheet" href="../styles/feedback.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/styles.css" />
+    <link rel="stylesheet" href="../styles/feedback.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="topbar">
+      <a href="index.html" class="btn-voltar">Voltar</a>
+      <h1>Queremos a sua opinião</h1>
+    </header>
 
-  
-</head>
-<body>
-  <header class="topbar">
-    <a href="index.html" class="btn-voltar">Voltar</a>
-    <h1>Queremos a sua opinião</h1>
-  </header>
-
-  <main class="container">
-    <form id="feedback-form" class="card">
-      <div class="grid">
-        <div>
-          <label for="fb-name">Seu nome (opcional)</label>
-          <input id="fb-name" type="text" placeholder="Seu nome" />
+    <main class="container">
+      <form id="feedback-form" class="card">
+        <div class="grid">
+          <div>
+            <label for="fb-name">Seu nome (opcional)</label>
+            <input id="fb-name" type="text" placeholder="Seu nome" />
+          </div>
+          <div>
+            <label for="fb-email">Seu e-mail (opcional)</label>
+            <input id="fb-email" type="email" placeholder="voce@exemplo.com" />
+          </div>
         </div>
-        <div>
-          <label for="fb-email">Seu e-mail (opcional)</label>
-          <input id="fb-email" type="email" placeholder="voce@exemplo.com" />
-        </div>
-      </div>
 
-      <label for="fb-message">Mensagem</label>
-      <textarea id="fb-message" rows="6" placeholder="Deixe suas opiniões, sugestões e bugs encontrados..." required></textarea>
+        <label for="fb-message">Mensagem</label>
+        <textarea id="fb-message" rows="6" placeholder="Deixe suas opiniões, sugestões e bugs encontrados..." required></textarea>
 
-      <button type="submit" class="btn">Enviar feedback</button>
-    </form>
-  </main>
-  <script src="../script/feedback.js" defer></script>
-</body>
+        <button type="submit" class="btn">Enviar feedback</button>
+      </form>
+    </main>
+
+    <script src="../script/feedback.js" defer></script>
+  </body>
 </html>

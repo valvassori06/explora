@@ -287,3 +287,15 @@ resultados{margin-top:.9rem; padding:1.35rem 1.45rem; border-radius:var(--radius
   *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important}
   header .logo{animation:none}
 }
+.llogo{                                         /* altura responsiva da logo */                                       /* mantém proporção da imagem */
+  margin:0;                                            /* remove margem */
+  filter:drop-shadow(0 16px 28px rgba(15,23,42,.32));  /* sombra projetada na logo */
+  animation:floatLogo 3s ease-in-out infinite;         /* animação de "flutuar" contínua */                                   /* cursor de mão (clicável) */
+}
+
+img.llogo{
+  margin-top: 2.5vh;
+  width: 13vh; 
+  height: 11vh;
+  z-index: 100;
+}

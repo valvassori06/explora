@@ -6,19 +6,37 @@ html,body{
 :root{
   --ink:#111; --bg:#fff; --muted:#6b7280; --dark:#121212;
   --orange:#5B735F ; --beige:#FBEAD2; --blue:#3B82F6; --accent:#0fa3b1;
+  --page-gradient: radial-gradient(120% 140% at 12% 12%, #fefdf9 0%, #f4f9f6 42%, #ecf4ff 100%);
+  --text-primary: #162231; 
+  --page-bg: #f8fbff;                                  /* cor base de fundo da página */
+  --page-gradient: radial-gradient(120% 140% at 12% 12%, #fefdf9 0%, #f4f9f6 42%, #ecf4ff 100%); /* gradiente decorativo do fundo */
+  --surface: rgba(255, 255, 255, 0.98);               /* cor de superfície (quase branco) */
+  --surface-muted: rgba(255, 255, 255, 0.92);         /* superfície mais translúcida */
+  --surface-soft: rgba(255, 255, 255, 0.82);          /* superfície ainda mais suave/translúcida */
+  --glass-border: rgba(62, 126, 102, 0.18);           /* cor da borda “glass” (vidro) */
+  --text-primary: #162231;                             /* cor principal do texto */
+  --text-muted: #425066;                               /* cor de texto secundário */
+  --accent: #2f8f6a;                                   /* cor de destaque principal (verde) */
+  --accent-strong: #1f6d4d;                            /* cor de destaque mais escura */
+  --accent-soft: rgba(47, 143, 106, 0.12);            /* cor de destaque suave (transparente) */
+  --highlight: #31c0bd;                                /* cor de realce (ciano/teal) */
+  --warning: #b45309;                                  /* cor para avisos */
+  --error: #b91c1c;                                    /* cor para erros */
+  --shadow-soft: 0 18px 45px rgba(31, 75, 59, 0.12);   /* sombra suave padrão */
+  --shadow-strong: 0 24px 70px rgba(15, 35, 44, 0.18); /* sombra mais forte */
+  
+  --shadow-float: 0 26px 54px rgba(31, 161, 139, 0.26);
+  --radius-lg: 24px;                                   /* raio de borda grande */
+  --radius-md: 16px;                                   /* raio de borda médio */
+  --radius-sm: 12px;                                   /* raio de borda pequeno */
+  --ring: 0 0 0 4px rgba(49, 192, 189, 0.22);          /* anel de foco (box-shadow) */
+  color-scheme: light;            
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+body{font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text-primary); background:var(--page-gradient);  ;line-height:1.55}
 
-/* NAV */
-.navbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #eee}
-.navbar .brand{display:flex;align-items:center;gap:.5rem;padding:12px 24px}
-.navbar .brand .logo{width:40px;height:40px;object-fit:contain}
-.navbar .brand span{font-weight:800;font-size:22px}
-.navbar nav{display:flex;gap:18px;padding:12px 24px;flex-wrap:wrap}
-.navbar nav a{text-decoration:none;color:#1f2937;font-weight:600}
-.navbar nav a:hover{text-decoration:underline}
-.btn-link{padding:.4rem .8rem;border-radius:8px;background:#111;color:#fff}
+
+.navegacao{display:flex;align-items:center;gap:clamp(.55rem,1.5vw,1.1rem);flex-wrap:wrap}
 
 /* containers */
 .container{max-width:1120px;margin:auto;padding:0 24px}
@@ -42,6 +60,27 @@ body{font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-seri
 .hero-orange p{opacity:.95;margin-bottom:20px}
 .btn-cta-outline{background:transparent;color:#fff;border:2px solid #fff;padding:10px 20px;border-radius:999px;font-weight:700;cursor:pointer}
 .btn-cta-outline:hover{transform:translateY(-1px)}
+.btn-orange:focus-visible{outline:none; box-shadow:var(--ring)}
+
+.btn-link{
+  padding:.5rem .9rem;border-radius:999px;text-decoration:none;font-weight:600; /* pill + seminegrito */
+  color:rgba(255,255,255,.85);                           /* texto claro translúcido */
+  transition:background .2s ease,transform .2s ease,color .2s ease; /* transições suaves no hover/focus */
+}
+
+.btn-link:hover,.btn-link:focus{color:#fff;background:rgba(255,255,255,.14);transform:translateY(-1px)} /* realce no hover/focus */
+.btn-link.active{background:rgba(255,255,255,.22);color:#fff}       /* estado ativo do link (página atual) */
+
+.btn-cadastro,.btn-login{
+  padding:.52rem 1.2rem;border-radius:999px;font-weight:700;text-decoration:none; /* botões “pílula” fortes */
+  transition:transform .2s ease, box-shadow .2s ease, filter .2s ease; /* animações no hover/focus */
+}
+
+.btn-cadastro{background:linear-gradient(125deg,var(--highlight),#6ee7b7);color:#05332d;box-shadow:0 16px 32px rgba(8,80,72,.32)} /* botão colorido (gradiente + sombra) */
+.btn-login{background:rgba(255,255,255,.16);color:#f8fafc;border:1px solid rgba(255,255,255,.28);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)} /* botão translucido com borda */
+
+.btn-cadastro:hover,.btn-login:hover{transform:translateY(-2px);filter:brightness(1.02)} /* leve elevação e brilho ao passar o mouse */
+
 
 /* SOBRE */
 .about{padding:56px 0}
@@ -96,7 +135,15 @@ blockquote cite{opacity:.9}
 .info{color:#065f46;margin-top:6px}
 .buttons{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
 .btn-outline{background:#fff;border:1px solid #ddd;border-radius:10px;padding:10px 12px;cursor:pointer}
-.btn-orange{background:var(--orange);color:#fff;border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
+.btn-orange{
+  align-self:stretch; justify-self:flex-start;          /* estica na coluna e alinha à esquerda */
+  background:linear-gradient(130deg, var(--highlight), #74ffd1); /* gradiente vibrante */
+  color:#04342c; border:none; border-radius:999px;      /* texto escuro + sem borda + pílula */
+  padding:.95rem 2rem; font-weight:700; font-size:1.02rem; cursor:pointer; /* dimensões e cursor */
+  box-shadow:var(--shadow-float);                       /* sombra flutuante */
+  transition:transform .18s ease, box-shadow .18s ease, filter .18s ease; /* transições rápidas */
+  flex:0 0 auto;                                        /* não cresce no grid flexível */
+}
 .resultados ul{list-style:none;margin-top:6px}
 .resultados li{display:flex;justify-content:space-between;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:10px;margin:8px 0}
 .resumo,.dicas{background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;padding:12px;margin-top:10px}
@@ -121,6 +168,23 @@ blockquote cite{opacity:.9}
 .socials{display:flex;gap:10px;margin-top:8px;opacity:.8}
 .copyright{text-align:center;opacity:.8;padding:12px 0;border-top:1px solid #1f1f1f}
 
+.btn-outline{
+  flex:1 1 160px; padding:.9rem 1.1rem; border-radius:16px; /* botão flexível com bom toque */
+  border:1.5px solid rgba(63,143,117,.28);                  /* borda verde suave */
+  background:rgba(255,255,255,.82); color:var(--text-primary); /* fundo claro translúcido + texto padrão */
+  font-weight:600; cursor:pointer;                           /* seminegrito + cursor de mão */
+  transition:transform .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease; /* transições */
+}
+.btn-outline:hover,.btn-outline:focus{border-color:var(--accent); color:var(--accent-strong); box-shadow:0 18px 34px rgba(63,143,117,.24); transform:translateY(-2px)} /* realce no hover/focus */
+.btn-outline:hover,.btn-outline:focus{border-color:var(--accent); color:var(--accent-strong); box-shadow:0 18px 34px rgba(63,143,117,.24); transform:translateY(-2px)} /* realce no hover/focus */
+
+@media (max-width:540px){
+  .buttons{flex-direction:column}                              /* empilha os botões */
+  .btn-outline,.btn-orange{width:100%}                         /* botões ocupam a largura total */
+  input[type="text"],input[type="number"],select{min-width:unset; flex:1 1 100%} /* inputs 100% sem mínimo */
+  .btn-cadastro,.btn-login{padding-inline:.85rem}              /* ajusta padding dos botões do header */
+}
+
 /* Responsivo */
 @media (max-width:900px){
   .features-row{grid-template-columns:1fr}
@@ -133,50 +197,60 @@ blockquote cite{opacity:.9}
 @media (max-width:560px){
   .transport-grid{grid-template-columns:1fr}
 }
+.llogo{                                         /* altura responsiva da logo */                                       /* mantém proporção da imagem */
+  margin:0;                                            /* remove margem */
+  filter:drop-shadow(0 16px 28px rgba(15,23,42,.32));  /* sombra projetada na logo */
+  animation:floatLogo 3s ease-in-out infinite;         /* animação de "flutuar" contínua */                                   /* cursor de mão (clicável) */
+}
 
+img.llogo{
+  margin-top: 2.5vh;
+  width: 13vh; 
+  height: 11vh;
+  z-index: 100;
+}
 /* Estilo para o cabeçalho, para alinhar os itens */
-header {
-  display: flex; /* Transforma o header em um container flexbox */
-  justify-content: space-between; /* Empurra os elementos para as extremidades */
-  align-items: center; /* Centraliza os itens verticalmente */
-  padding: 20px 40px; /* Adicione padding para o espaçamento */
-  background-color: #1b2735; /* O fundo escuro do seu site */
-  color: #fff;/* Tira a margem padrão do header */
-  padding: 0; /* Tira o padding padrão do header */
-  padding: 3.1vh 3vh; /* Adiciona padding para espaçamento */
+header{
+  position:sticky; top:0; z-index:30;                  /* fixa no topo ao rolar e fica acima de outros elementos */
+  background:rgba(12,27,44,.92);                       /* fundo escuro translúcido do header */
+  backdrop-filter:blur(18px);                          /* efeito de desfoque atrás (glassmorphism) */
+  color:#f9fafb;                                       /* texto claro no header */
+  display:flex; align-items:center; justify-content:space-between; /* layout flex: logo à esquerda, nav à direita */
+  gap:clamp(1rem,3vw,2rem);                            /* espaçamento fluido entre itens */
+  padding:1rem clamp(1.4rem,4vw,3rem);                 /* padding responsivo no header */
+  box-shadow:0 18px 35px rgba(15,23,42,.24);           /* sombra inferior para destaque */
+}
+@media (max-width:720px){
+  header{padding:.9rem 1.4rem; gap:1rem; flex-wrap:wrap; justify-content:center} /* header mais compacto e centralizado */
+  .navegacao{justify-content:center}                          /* centraliza a navegação */
+  .plan-section{padding:2.2rem 1.9rem}                        /* reduz padding da seção */
+}
+
+
+header .logo{
+  height:clamp(24px,7vw,48px);                        /* altura responsiva da logo */
+  width:auto;                                          /* mantém proporção da imagem */
+  margin:0;                                            /* remove margem */
+  filter:drop-shadow(0 16px 28px rgba(15,23,42,.32));  /* sombra projetada na logo */
+  animation:floatLogo 6s ease-in-out infinite;         /* animação de "flutuar" contínua */
+  cursor:pointer;                                      /* cursor de mão (clicável) */
+}
+
+@keyframes floatLogo{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}} 
+
+@media (max-width:960px){ header .logo{display:block; height:48px} }
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important}
+  header .logo{animation:none}
 }
 
 /* Estilo para o botão */
-.btn-cadastro {
-  background-color: var(--orange);
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-}
+
 .container-cadastro {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     margin: 0;
-}
-
-.logo {
-    height: 15vh;
-    width: 15vh;
-    position: absolute;
-    z-index: 2;
-    top: -3.3vh;
-    left: -1vh;
-}
-
-.btn-login {
-    background-color: var(--orange);
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
 }

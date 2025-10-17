@@ -11,16 +11,17 @@ const app = express();
 
 // ===== Middlewares
 app.use(express.json());
-app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN || '*', // DEV: libera geral se não tiver env
-  })
-);
+app.use(cors());
 
 // ===== Postgres
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
+
+// Teste rápido de conexão com DB na inicialização para dar feedback imediato
+pool.query('SELECT 1')
+  .then(() => console.log('✅ Conexão com Postgres OK'))
+  .catch((err) => console.error('❌ Falha ao conectar no Postgres:', err.stack || err));
 
 // ===== Helpers
 function signToken(user) {
@@ -71,32 +72,31 @@ app.post('/api/auth/login', async (req, res) => {
 
     res.json({ user: { id: u.id, name: u.name, email: u.email }, token: signToken(u) });
   } catch (e) {
-    console.error(e);
+    console.error(e.stack || e);
     res.status(500).json({ error: 'erro interno' });
   }
 });
 
 // ===== Feedback
 
+// ===== Feedback
 app.post('/api/feedback', async (req, res) => {
   try {
-    console.log("📩 Feedback recebido no servidor:", req.body);
+    console.log('📩 Feedback recebido:', req.body);
 
-    const name = String(req.body?.name || '').trim() || null;
-    const email = String(req.body?.email || '').toLowerCase().trim() || null;
-    const message = String(req.body?.message || '').trim();
+    const { name, email, message } = req.body;
 
     if (!message) return res.status(400).json({ error: 'mensagem obrigatória' });
 
-    await pool.query('INSERT INTO feedbacks (name,email,message) VALUES ($1,$2,$3)', [
-      name,
-      email,
-      message,
-    ]);
+    await pool.query(
+      'INSERT INTO feedbacks (name,email,message) VALUES ($1,$2,$3)',
+      [name || null, email || null, message]
+    );
 
+    console.log('✅ Feedback salvo no banco');
     res.status(201).json({ ok: true });
   } catch (e) {
-    console.error(e);
+    console.error(e.stack || e);
     res.status(500).json({ error: 'erro interno' });
   }
 });
@@ -128,7 +128,7 @@ app.post('/api/auth/forgot', async (req, res) => {
 
     res.json({ ok: true });
   } catch (e) {
-    console.error(e);
+    console.error(e.stack || e);
     res.status(500).json({ error: 'Erro interno' });
   }
 });
@@ -157,7 +157,7 @@ app.post('/api/auth/reset', async (req, res) => {
 
     res.json({ ok: true });
   } catch (e) {
-    console.error(e);
+    console.error(e.stack || e);
     res.status(500).json({ error: 'Erro interno' });
   }
 });

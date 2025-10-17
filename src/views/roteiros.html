@@ -13,16 +13,18 @@
 
 <body>
   <!-- ===== TOPO (logo + navegação) ===== -->
-  <header class="topbar"> <!-- barra fixa no topo com fundo -->
+<header class="test"> <!-- topo do site -->
     <img class="logo" src="../../public/logos/llogo.png" alt="Logo Explora" /> <!-- logomarca -->
-    <nav class="navegacao" aria-label="Navegação principal"> <!-- menu principal do site -->
-      <a href="index.html" class="btn-link">Início</a> <!-- link para a home -->
-      <a href="planejar.html" class="btn-link">Planejar</a> <!-- link para planejar -->
-      <a href="roteiros.html" class="btn-link active">Roteiros</a> <!-- página atual (ativa) -->
+    <nav class="navegacao"> <!-- menu -->
+      <a href="index.html" class="btn-link">Início</a> <!-- link para home -->
+      <a href="planejar.html" class="btn-link active">Planejar</a> <!-- página atual -->
+      <a href="roteiros.html" class="btn-link">Roteiros</a> <!-- link para roteiros -->
       <a href="cadastro.html" class="btn-cadastro">Cadastre-se ou faça login</a> <!-- CTA de cadastro/login -->
     </nav>
   </header>
-
+  <div style="position:fixed; margin-top: -10vh; z-index: 100; width: 45vh; height: 45vh;">
+    <img class="llogo" src="../../public/logos/llogo.png" alt="Logo Explora" />
+  </div>
   <!-- ===== CONTEÚDO PRINCIPAL ===== -->
   <main class="roteiros-page"> <!-- wrapper com largura máxima e padding -->
     <!-- HERO (introdução do recurso) -->

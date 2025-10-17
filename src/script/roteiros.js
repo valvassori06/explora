@@ -1824,7 +1824,7 @@ window.roteirosData['Porto Seguro'] = {
     {
       nome: 'Parapente de falésia (condições favoráveis)',
       descricao: 'Em pontos específicos, escolas habilitadas fazem voos duplos sobre falésias e mar. O take-off é uma corrida curta e já vem a sensação de flutuar. Lá em cima, curvas amplas mostram o litoral de outro ângulo. O pouso na areia é macio e assistido pela equipe. Fotos e vídeos registram a experiência toda. A atividade depende de vento e pode ser remarcada. Pura adrenalina com vista épica.',
-      imagem: '../../public/img/Parapente de falésia.jpg',
+      imagem: '../../public/img/Parapente de falésia.png',
       link: 'https://bestflyrio.com.br/?gad_source=1&gad_campaignid=1677161017&gbraid=0AAAAADhhOfD4pfEtyV2Z5QFIaAbRtgHsS&gclid=Cj0KCQjw3aLHBhDTARIsAIRij58FfP0iE9iDx-PnDhhYT_RpTm9sZOo5lxMfCSTg5jCET0xLfa_AXHIaAqAUEALw_wcB',
       groupSize: 2,
       priceRange: 'R$ 450 – R$ 800 por pessoa',
@@ -1986,7 +1986,7 @@ window.roteirosData['Fortaleza'] = {
     {
       nome: 'Praia do Futuro – barracas confortáveis',
       descricao: 'A Praia do Futuro é famosa por barracas estruturadas com cadeiras, redes e duchas. Dá para passar horas entre banhos de mar, sombra e petiscos frescos. Algumas barracas têm até espaços infantis e música ao vivo suave. O mar é aberto, mas com trechos bons para um mergulho rápido. O serviço é atento e mantém o ritmo de descanso. Há banheiros e guarda-volumes que facilitam a logística. Relax total com conforto e comida boa.',
-      imagem: '../../public/img/Praia do Futuro.jpg',
+      imagem: '../../public/img/Praia do Futuro.png',
       link: 'https://granmareiro.com.br/blog/barracas-da-praia-do-futuro/',
       groupSize: 200,
       priceRange: 'Gratuito (estrutura/consumo à parte)',
@@ -2004,7 +2004,7 @@ window.roteirosData['Fortaleza'] = {
     {
       nome: 'Parque do Cocó – passarelas e natureza urbana',
       descricao: 'O Parque do Cocó preserva um manguezal amplo no coração da cidade. Passarelas de madeira e trilhas curtas permitem caminhar na sombra. O som de aves e o vento entre as árvores ajudam a desacelerar. Há gramados e áreas para piquenique e leitura. A sinalização orienta rotas fáceis e acessíveis. É um respiro verde entre a praia e o centro. Meio período aqui renova as energias.',
-      imagem: '../../public/img/Parque do Coco.jpg',
+      imagem: '../../public/img/Parque do Coco.png',
       link: 'https://www.sema.ce.gov.br/gestao-de-ucs/unidades-de-conservacao-de-protecao-integral/parques/parque-estadual-do-coco_/',
       groupSize: 80,
       priceRange: 'Gratuito',
@@ -2276,7 +2276,7 @@ window.roteirosData['São Paulo'] = {
     {
       nome: 'Parque Villa-Lobos – gramados e ciclovias',
       descricao: 'O Villa-Lobos tem áreas amplas de grama e ciclovias planas. O vento dos eucaliptos refresca o passeio. Dá para alugar bike e pedalar sem pressa. Decks e mirantes ficam ótimos para fotos. Banheiros e lanchonetes facilitam ficar mais tempo. Música ao ar livre aparece em alguns fins de semana. Programa leve para manhãs ensolaradas.',
-      imagem: '../../public/img/parqueVillaLobos.jpg',
+      imagem: '../../public/img/parqueVillaLobos.png',
       link: 'https://parquevillalobos.com.br/parque-villa-lobos/',
       groupSize: 200,
       priceRange: 'Gratuito (aluguel de bike à parte)',
@@ -2312,7 +2312,7 @@ window.roteirosData['São Paulo'] = {
     {
       nome: 'Parque da Água Branca – sombra e bichinhos',
       descricao: 'Perto da Barra Funda, o parque preserva clima de fazendinha. Galinhas e pavões circulam pelos jardins. Alamedas sombreadas aliviam o calor. Quiosques e feirinhas surgem em alguns dias. O ritmo é de bairro e famílias. Bancos antigos convidam a um café sem pressa. Passeio ideal para manhã tranquila.',
-      imagem: '../../public/img/aguabranca.jpg',
+      imagem: '../../public/img/aguabranca.webp',
       link: 'https://www.parqueaguabranca.com/',
       groupSize: 120,
       priceRange: 'Gratuito',
@@ -2330,7 +2330,7 @@ window.roteirosData['São Paulo'] = {
     {
       nome: 'Pinheiros e Alto de Pinheiros – ciclovia e cafés',
       descricao: 'Entre praças e ciclovias, o bairro convida a passear sem pressa. Intercale pedal leve com paradas em cafés. As ruas arborizadas deixam o ar mais fresco. Lojas independentes rendem garimpo rápido. Praças têm brinquedos e bancos confortáveis. O ritmo é de bairro e conversa na calçada. Um circuito relax e gostoso de fazer.',
-      imagem: '../../public/img/Pinheiros.jpg',
+      imagem: '../../public/img/Pinheiros.png',
       link: 'https://www.ideazarvos.com.br/magazine/alto-de-pinheiros/',
       groupSize: 200,
       priceRange: 'Gratuito (aluguel/consumo à parte)',

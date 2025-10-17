@@ -12,7 +12,11 @@
   --radius-md: 18px;
   --shadow-soft: 0 32px 60px rgba(20, 44, 64, 0.12);
 }
-
+.llogo{                                         /* altura responsiva da logo */                                       /* mantém proporção da imagem */
+  margin:0;                                            /* remove margem */
+  filter:drop-shadow(0 16px 28px rgba(15,23,42,.32));  /* sombra projetada na logo */
+  animation:floatLogo 3s ease-in-out infinite;         /* animação de "flutuar" contínua */                                   /* cursor de mão (clicável) */
+}
 * { box-sizing: border-box; }
 
 body {
