@@ -1,90 +1,79 @@
-<!DOCTYPE html> <!-- define que o documento segue o padrão HTML5 -->
-<html lang="pt-BR"> <!-- idioma da página definido como português do Brasil -->
-
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" /> <!-- define a codificação de caracteres (suporta acentos) -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- deixa o layout responsivo -->
-  <title>Explora — Cadastro / Login</title> <!-- título exibido na aba do navegador -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explora — Cadastro / Login</title>
 
-  <!-- Importa os arquivos de estilo -->
-  <link rel="stylesheet" href="../styles/styles.css" /> <!-- CSS global do site -->
-  <link rel="stylesheet" href="../styles/cadastro.css" /> <!-- CSS específico dessa página -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet"> <!-- fonte Poppins do Google Fonts -->
+  <link rel="stylesheet" href="../styles/styles.css" />
+  <link rel="stylesheet" href="../styles/cadastro.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
-  <!-- Scripts JavaScript -->
-  <script src="../script/cadastro.js" defer></script> <!-- controla o efeito de trocar entre login e cadastro -->
-  <script src="../script/auth.js" defer></script> <!-- (opcional) pode validar login e cadastro -->
+  <script src="../script/cadastro.js" defer></script>
 </head>
 
-<body> <!-- corpo principal da página -->
-
-  <!-- container principal que contém todos os elementos -->
+<body>
   <div class="container" id="container">
+    <!-- ===== CADASTRO ===== -->
+    <div class="form-container sign-up-container">
+      <a href="index.html" class="btn-cadastro">Voltar</a>
 
-    <!-- ==================== ÁREA DE CADASTRO ==================== -->
-    <div class="form-container sign-up-container"> <!-- painel de cadastro -->
-      <a href="index.html" class="btn-cadastro">Voltar</a> <!-- botão/link para voltar para a página inicial -->
+      <form id="form-cadastro" action="#">
+        <h1>Criar conta</h1>
 
-      <form action="#"> <!-- formulário de criação de conta -->
-        <h1>Criar conta</h1> <!-- título da seção -->
-
-        <div class="social-container"> <!-- ícones de redes sociais -->
-          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a> <!-- login via Facebook -->
-          <a href="#" class="social"><i class="fab fa-google"></i></a> <!-- login via Google -->
-          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a> <!-- login via LinkedIn -->
-        </div>
-
-        <span>Ou utilize seu e-mail para login</span> <!-- texto explicativo -->
-
-        <!-- campos do formulário -->
-        <input type="text" placeholder="Nome" required /> <!-- campo para digitar o nome -->
-        <input type="email" placeholder="E-mail" required /> <!-- campo de e-mail -->
-        <input type="password" placeholder="Senha" required /> <!-- campo de senha -->
-
-        <button type="submit">Cadastrar</button> <!-- botão de envio -->
-      </form>
-    </div>
-
-    <!-- ==================== ÁREA DE LOGIN ==================== -->
-    <div class="form-container sign-in-container"> <!-- painel de login -->
-      <a href="index.html" class="btn-cadastro">Voltar</a> <!-- link de retorno -->
-
-      <form action="#"> <!-- formulário de login -->
-        <h1>Login</h1> <!-- título do formulário -->
-
-        <div class="social-container"> <!-- ícones de login social -->
+        <div class="social-container">
           <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
           <a href="#" class="social"><i class="fab fa-google"></i></a>
           <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
 
-        <span>Ou use sua conta</span> <!-- instrução ao usuário -->
+        <span>Ou utilize seu e-mail para login</span>
 
-        <!-- campos para login -->
-        <input type="email" placeholder="E-mail" required /> <!-- campo de e-mail -->
-        <input type="password" placeholder="Senha" required /> <!-- campo de senha -->
+        <input id="cad-nome"  type="text"   placeholder="Nome"  required />
+        <input id="cad-email" type="email"  placeholder="E-mail" required />
+        <input id="cad-senha" type="password" placeholder="Senha" required />
 
-        <a href="#">Esqueceu sua senha?</a> <!-- link de recuperação de senha -->
-        <button type="submit">Entrar</button> <!-- botão para fazer login -->
+        <button type="submit">Cadastrar</button>
       </form>
     </div>
 
-    <!-- ==================== ÁREA DO OVERLAY ==================== -->
-    <div class="overlay-container"> <!-- container que contém o painel deslizante -->
-      <div class="overlay"> <!-- camada que cobre metade da tela e alterna entre login e cadastro -->
+    <!-- ===== LOGIN ===== -->
+    <div class="form-container sign-in-container">
+      <a href="index.html" class="btn-cadastro">Voltar</a>
 
-        <div class="overlay-panel overlay-left"> <!-- painel do lado esquerdo (login ativo) -->
-          <h1>Bem-vindo de volta!</h1> <!-- título de boas-vindas -->
-          <p>Para continuar conectado conosco, realize o login.</p> <!-- texto informativo -->
-          <button class="ghost" id="signIn">Login</button> <!-- botão que ativa o painel de login -->
+      <form id="form-login" action="#">
+        <h1>Login</h1>
+
+        <div class="social-container">
+          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social"><i class="fab fa-google"></i></a>
+          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
 
-        <div class="overlay-panel overlay-right"> <!-- painel do lado direito (cadastro ativo) -->
-          <h1>Olá, viajante!</h1> <!-- título acolhedor -->
-          <p>Preencha seus dados para começar sua jornada.</p> <!-- texto motivacional -->
-          <button class="ghost" id="signUp">Cadastre-se</button> <!-- botão que ativa o painel de cadastro -->
+        <span>Ou use sua conta</span>
+
+        <input id="log-email" type="email" placeholder="E-mail" required />
+        <input id="log-senha" type="password" placeholder="Senha" required />
+
+        <a href="#" id="forgot-link">Esqueceu sua senha?</a>
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+
+    <!-- ===== OVERLAY ===== -->
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Bem-vindo de volta!</h1>
+          <p>Para continuar conectado conosco, realize o login.</p>
+          <button class="ghost" id="signIn">Login</button>
         </div>
 
+        <div class="overlay-panel overlay-right">
+          <h1>Olá, viajante!</h1>
+          <p>Preencha seus dados para começar sua jornada.</p>
+          <button class="ghost" id="signUp">Cadastre-se</button>
+        </div>
       </div>
     </div>
   </div>

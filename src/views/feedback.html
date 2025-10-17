@@ -95,3 +95,48 @@
   </script>
 </body>
 </html>
+
+<body class="compact-header">
+  ...
+</body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explora — Feedback</title>
+
+  <link rel="stylesheet" href="../styles/styles.css" />
+  <link rel="stylesheet" href="../styles/feedback.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+  
+</head>
+<body>
+  <header class="topbar">
+    <a href="index.html" class="btn-voltar">Voltar</a>
+    <h1>Queremos a sua opinião</h1>
+  </header>
+
+  <main class="container">
+    <form id="feedback-form" class="card">
+      <div class="grid">
+        <div>
+          <label for="fb-name">Seu nome (opcional)</label>
+          <input id="fb-name" type="text" placeholder="Seu nome" />
+        </div>
+        <div>
+          <label for="fb-email">Seu e-mail (opcional)</label>
+          <input id="fb-email" type="email" placeholder="voce@exemplo.com" />
+        </div>
+      </div>
+
+      <label for="fb-message">Mensagem</label>
+      <textarea id="fb-message" rows="6" placeholder="Deixe suas opiniões, sugestões e bugs encontrados..." required></textarea>
+
+      <button type="submit" class="btn">Enviar feedback</button>
+    </form>
+  </main>
+  <script src="../script/feedback.js" defer></script>
+</body>
+</html>

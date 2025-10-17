@@ -226,3 +226,51 @@ button.btn:active { transform: translateY(0); box-shadow: 0 12px 24px -18px rgba
   .navegacao { flex-wrap: wrap; gap: 8px; }
   button.btn { width: 100%; justify-content: center; }
 }
+
+/* ====== MODO COMPACTO DE CABEÇALHO ====== */
+/* Ative com: <body class="compact-header"> na página que quiser */
+
+.compact-header header,
+.compact-header .navbar{
+  padding: 8px 14px !important;          /* era ~3.1vh 3vh / 12px 24px */
+  border-bottom: 1px solid #0e1a25;      /* fica mais “fino” */
+}
+
+/* Tamanho da logo no topo */
+.compact-header .navbar .brand .logo,
+.compact-header header .logo,
+.compact-header .logo{
+  height: 36px !important;
+  width: 36px !important;
+  object-fit: contain;
+  position: static !important;           /* evita estourar o header */
+  top: auto !important; left: auto !important; z-index: auto !important;
+}
+
+/* Espaçamento do bloco da marca e da navegação */
+.compact-header .navbar .brand{ padding: 6px 8px !important; gap: .4rem; }
+.compact-header .navbar nav{ padding: 6px 8px !important; gap: 10px; }
+
+/* “Pílulas” do menu (Início / Planejar / Roteiros) mais enxutas */
+.compact-header .navbar nav a{
+  padding: 6px 10px !important;          /* era ~12px/18px */
+  border-radius: 999px;
+}
+
+/* Botões verdes/escuros do canto (Cadastro / Login) menores */
+.compact-header .btn-link,
+.compact-header .btn-cadastro,
+.compact-header .btn-login{
+  padding: 8px 12px !important;          /* era 10px 18px */
+  border-radius: 10px !important;
+}
+
+/* Mobile ainda mais compacto */
+@media (max-width: 900px){
+  .compact-header header,
+  .compact-header .navbar{ padding: 6px 10px !important; }
+  .compact-header .navbar nav{ gap: 8px; }
+  .compact-header .navbar nav a{ padding: 6px 8px !important; }
+  .compact-header .navbar .brand .logo,
+  .compact-header header .logo{ height: 32px !important; width: 32px !important; }
+}

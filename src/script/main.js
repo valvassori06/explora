@@ -1,3 +1,5 @@
+
+
 // Espera o conteúdo da página ser totalmente carregado antes de rodar o código
 document.addEventListener('DOMContentLoaded', ()=>{
 

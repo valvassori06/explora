@@ -133,6 +133,72 @@ header.topbar {
   mix-blend-mode: screen; pointer-events: none;
 }
 
+.plan-handoff {
+  margin-top: clamp(2rem, 5vw, 3rem);
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.9rem, 4vw, 2.5rem);
+  box-shadow: 0 26px 54px rgba(15, 35, 44, 0.18);
+  border: 1px solid rgba(44, 73, 64, 0.12);
+  display: grid;
+  gap: 1.2rem;
+}
+
+.plan-handoff[hidden] { display: none; }
+
+.handoff-pill {
+  align-self: flex-start;
+  background: linear-gradient(130deg, rgba(49,192,189,0.18), rgba(94,234,212,0.32));
+  color: var(--accent-strong);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.handoff-content { display: grid; gap: 1rem; }
+.handoff-content h2 { font-size: clamp(1.5rem, 3.4vw, 2.1rem); font-weight: 700; color: var(--text-primary); }
+.handoff-content p { color: var(--text-muted); font-size: 1rem; line-height: 1.7; }
+
+.handoff-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.handoff-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(49,192,189,0.15);
+  color: var(--accent-strong);
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.handoff-highlights {
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+  padding: 0;
+  margin: 0;
+}
+
+.handoff-highlights li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  color: var(--text-muted);
+}
+
+.handoff-highlights li::before {
+  content: '✨';
+  font-size: 1rem;
+}
+
+
 .hero-kicker { font-weight: 600; text-transform: uppercase; letter-spacing: 0.28em; font-size: 0.72rem; opacity: 0.85; margin-bottom: 0.8rem; }
 .hero h1 { font-size: clamp(2.1rem, 4.4vw, 3rem); line-height: 1.18; margin-bottom: clamp(0.9rem, 2.4vw, 1.4rem); }
 .hero-description { color: rgba(255,255,255,0.98); font-size: clamp(1.05rem, 2.4vw, 1.12rem); max-width: 58ch; line-height: 1.7; }
@@ -370,4 +436,52 @@ img {
     width: min(340px, 100%);
     justify-content: center;
   }
+}
+
+/* ====== MODO COMPACTO DE CABEÇALHO ====== */
+/* Ative com: <body class="compact-header"> na página que quiser */
+
+.compact-header header,
+.compact-header .navbar{
+  padding: 8px 14px !important;          /* era ~3.1vh 3vh / 12px 24px */
+  border-bottom: 1px solid #0e1a25;      /* fica mais “fino” */
+}
+
+/* Tamanho da logo no topo */
+.compact-header .navbar .brand .logo,
+.compact-header header .logo,
+.compact-header .logo{
+  height: 36px !important;
+  width: 36px !important;
+  object-fit: contain;
+  position: static !important;           /* evita estourar o header */
+  top: auto !important; left: auto !important; z-index: auto !important;
+}
+
+/* Espaçamento do bloco da marca e da navegação */
+.compact-header .navbar .brand{ padding: 6px 8px !important; gap: .4rem; }
+.compact-header .navbar nav{ padding: 6px 8px !important; gap: 10px; }
+
+/* “Pílulas” do menu (Início / Planejar / Roteiros) mais enxutas */
+.compact-header .navbar nav a{
+  padding: 6px 10px !important;          /* era ~12px/18px */
+  border-radius: 999px;
+}
+
+/* Botões verdes/escuros do canto (Cadastro / Login) menores */
+.compact-header .btn-link,
+.compact-header .btn-cadastro,
+.compact-header .btn-login{
+  padding: 8px 12px !important;          /* era 10px 18px */
+  border-radius: 10px !important;
+}
+
+/* Mobile ainda mais compacto */
+@media (max-width: 900px){
+  .compact-header header,
+  .compact-header .navbar{ padding: 6px 10px !important; }
+  .compact-header .navbar nav{ gap: 8px; }
+  .compact-header .navbar nav a{ padding: 6px 8px !important; }
+  .compact-header .navbar .brand .logo,
+  .compact-header header .logo{ height: 32px !important; width: 32px !important; }
 }

@@ -17,7 +17,7 @@
   --shadow-soft: 0 18px 45px rgba(31, 75, 59, 0.12);   /* sombra suave padrão */
   --shadow-strong: 0 24px 70px rgba(15, 35, 44, 0.18); /* sombra mais forte */
   
---shadow-float: 0 26px 54px rgba(31, 161, 139, 0.26);/* sombra “flutuante” para botões/elementos */
+  --shadow-float: 0 26px 54px rgba(31, 161, 139, 0.26);
   --radius-lg: 24px;                                   /* raio de borda grande */
   --radius-md: 16px;                                   /* raio de borda médio */
   --radius-sm: 12px;                                   /* raio de borda pequeno */
@@ -55,7 +55,7 @@ header{
 }
 
 header .logo{
-  height:clamp(68px,7vw,120px);                        /* altura responsiva da logo */
+  height:clamp(6px,7vw,12px);                        /* altura responsiva da logo */
   width:auto;                                          /* mantém proporção da imagem */
   margin:0;                                            /* remove margem */
   filter:drop-shadow(0 16px 28px rgba(15,23,42,.32));  /* sombra projetada na logo */
@@ -138,6 +138,9 @@ header .logo{
 .step p,.step label{color:var(--text-muted); font-size:.99rem; line-height:1.65} /* textos/labels da etapa */
 
 .form-row{display:flex; flex-wrap:wrap; gap:.9rem; align-items:center} /* linha de inputs com quebra automática */
+.hint{font-size:.9rem; color:var(--text-muted);} /* dica auxiliar abaixo dos campos */
+.info-total{font-weight:700; color:var(--accent-strong);} /* destaca número total de viajantes */
+.note{font-size:.85rem; color:var(--text-muted);} /* observação complementar */
 
 /* campos de entrada (texto/número/select) */
 input[type="text"], input[type="number"], select{
@@ -149,6 +152,8 @@ input[type="text"], input[type="number"], select{
 }
 
 input:focus, select:focus{border-color:var(--highlight); box-shadow:var(--ring); outline:none; transform:translateY(-1px)} /* foco com anel e leve subida */
+input:focus-visible, select:focus-visible{outline:none}
+.btn-orange:focus-visible{outline:none; box-shadow:var(--ring)}
 
 /* botão CTA verde (laranja no contexto do projeto) */
 .btn-orange{
@@ -162,6 +167,8 @@ input:focus, select:focus{border-color:var(--highlight); box-shadow:var(--ring);
 }
 
 .btn-orange:hover,.btn-orange:focus{transform:translateY(-3px); box-shadow:0 32px 64px rgba(31,161,139,.34); filter:brightness(1.04)} /* efeito hover/focus */
+.btn-orange:focus-visible{outline:none; box-shadow:var(--ring)}
+
 
 /* grupo de botões “opções” */
 .buttons{display:flex; gap:.75rem; flex-wrap:wrap}      /* linha de botões com quebra */
@@ -175,20 +182,64 @@ input:focus, select:focus{border-color:var(--highlight); box-shadow:var(--ring);
 }
 
 .btn-outline:hover,.btn-outline:focus{border-color:var(--accent); color:var(--accent-strong); box-shadow:0 18px 34px rgba(63,143,117,.24); transform:translateY(-2px)} /* realce no hover/focus */
+.btn-outline:hover,.btn-outline:focus{border-color:var(--accent); color:var(--accent-strong); box-shadow:0 18px 34px rgba(63,143,117,.24); transform:translateY(-2px)} /* realce no hover/focus */
+
 
 /* listas de resultados (hospedagens, transporte, etc.) */
-.resultados{margin-top:.9rem; padding:1.35rem 1.45rem; border-radius:var(--radius-md); background:rgba(15,23,42,.04); display:grid; gap:.9rem; animation:fadeInUp .4s ease both} /* bloco de resultados */
+.resultados{margin-top:.9rem; padding:1.35rem 1.45rem; border-radius:var(--radius-md); background:rgba(15,23,42,.04); display:grid; gap:1rem; animation:fadeInUp .4s ease both} /* bloco de resultados */
+resultados{margin-top:.9rem; padding:1.35rem 1.45rem; border-radius:var(--radius-md); background:rgba(15,23,42,.04); display:grid; gap:1rem; animation:fadeInUp .4s ease both} /* bloco de resultados */
 .resultados h4{font-size:1.05rem; font-weight:700}      /* título dos resultados */
-.resultados ul{list-style:none; display:grid; gap:.8rem}/* lista sem marcadores em grid */
-.resultados li{display:flex; justify-content:space-between; align-items:center; font-weight:600; color:var(--text-primary); padding:.85rem 1.2rem; border-radius:var(--radius-md); background:rgba(255,255,255,.95); box-shadow:0 14px 28px rgba(15,23,42,.12)} /* item com nome/valor */
+.resultados ul{list-style:none; display:grid; gap:1rem}/* lista sem marcadores em grid */
+.resultados li{display:flex; flex-direction:column; gap:.45rem; align-items:flex-start; font-weight:600; color:var(--text-primary); padding:1rem 1.2rem; border-radius:var(--radius-md); background:rgba(255,255,255,.95); box-shadow:0 14px 28px rgba(15,23,42,.12)} /* item com informações */
+.resultados li.metric{flex-direction:row; justify-content:space-between; align-items:center; gap:1rem} /* métricas em duas colunas */
+.resultados li.metric span:last-child{font-weight:700}
 .resultados p{color:var(--text-muted); font-size:.9rem; line-height:1.6} /* descrição dos resultados */
+.resultados ul{list-style:none; display:grid; gap:.9rem}
+.resultados ul li{display:flex; flex-direction:column; gap:.45rem; align-items:flex-start; font-weight:600; color:var(--text-primary); padding:1rem 1.2rem; border-radius:var(--radius-md); background:rgba(255,255,255,.95); box-shadow:0 14px 28px rgba(15,23,42,.12)}
+.resultados li.metric{flex-direction:row; justify-content:space-between; align-items:center; gap:1rem}
+.resultados li.metric span:last-child{font-weight:700}
+.lista-hospedagem li{position:relative; padding-bottom:.9rem} /* espaço para status */
+.lista-hospedagem li:last-child{padding-bottom:.45rem}
+.lista-hospedagem .item-info{display:flex; flex-direction:column; gap:.25rem}
+.lista-hospedagem .item-info strong{font-size:1rem}
+.lista-hospedagem .item-info span{font-size:.9rem; font-weight:500; color:var(--text-muted)}
+.lista-hospedagem .item-price{display:flex; flex-direction:column; gap:.25rem; font-weight:600}
+.lista-hospedagem .item-price .valor{font-size:1.05rem}
+.lista-hospedagem .item-price small{font-size:.82rem; font-weight:500; color:var(--text-muted)}
+.lista-hospedagem .item-status{margin-top:.35rem; font-size:.85rem; font-weight:600}
+.lista-hospedagem .item-status.status-ok{color:#047857}
+.lista-hospedagem .item-status.status-alert{color:#b45309}
+.lista-hospedagem li{position:relative; padding-bottom:.9rem}
+.lista-hospedagem li:last-child{padding-bottom:.45rem}
+.lista-hospedagem .item-info{display:flex; flex-direction:column; gap:.25rem}
+.lista-hospedagem .item-info strong{font-size:1rem}
+.lista-hospedagem .item-info span{font-size:.9rem; font-weight:500; color:var(--text-muted)}
+.lista-hospedagem .item-price{display:flex; flex-direction:column; gap:.25rem; font-weight:600}
+.lista-hospedagem .item-price .valor{font-size:1.05rem}
+.lista-hospedagem .item-price small{font-size:.82rem; font-weight:500; color:var(--text-muted)}
+.lista-hospedagem .item-status{margin-top:.35rem; font-size:.85rem; font-weight:600}
+.lista-hospedagem .item-status.status-ok{color:#047857}
+.lista-hospedagem .item-status.status-alert{color:#b45309}
 
 @keyframes fadeInUp{from{opacity:0; transform:translateY(12px)} to{opacity:1; transform:translateY(0)}} /* animação de entrada vertical */
 
 /* blocos finais: resumo e dicas */
-.resumo,.dicas{border-radius:var(--radius-md); background:rgba(255,255,255,.95); padding:1.45rem 1.6rem; box-shadow:0 18px 40px rgba(15,35,44,.12); border:1px solid rgba(63,143,117,.24); animation:fadeInUp .4s ease both} /* cartões finais */
-.resumo p,.dicas p{font-weight:600; color:var(--text-primary)} /* títulos/textos nesses cartões */
-.dicas ul{list-style:disc; margin-left:1.1rem; color:var(--text-muted); display:grid; gap:.45rem; padding-top:.4rem} /* lista de dicas com marcadores */
+.card-info{border-radius:var(--radius-md); background:rgba(255,255,255,.95); padding:1.45rem 1.6rem; box-shadow:0 18px 40px rgba(15,35,44,.12); border:1px solid rgba(63,143,117,.24); animation:fadeInUp .4s ease both}
+.card-info p{font-weight:600; color:var(--text-primary); line-height:1.6}
+.card-info p:not(:last-child){margin-bottom:.45rem}
+.card-info ul{list-style:disc; margin-left:1.1rem; color:var(--text-muted); display:grid; gap:.45rem; padding-top:.4rem}
+.card-info ul li{line-height:1.6}
+#resumo p{font-weight:500; color:var(--text-muted)}
+#resumo p strong{color:var(--text-primary)}
+.extras-grid{display:grid; gap:1.1rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:1rem}
+.card-info{border-radius:var(--radius-md); background:rgba(255,255,255,.95); padding:1.45rem 1.6rem; box-shadow:0 18px 40px rgba(15,35,44,.12); border:1px solid rgba(63,143,117,.24); animation:fadeInUp .4s ease both} /* cartões finais */
+.card-info p{font-weight:600; color:var(--text-primary); line-height:1.6}
+.card-info p:not(:last-child){margin-bottom:.45rem}
+.card-info ul{list-style:disc; margin-left:1.1rem; color:var(--text-muted); display:grid; gap:.45rem; padding-top:.4rem}
+.card-info ul li{line-height:1.6}
+#resumo p{font-weight:500; color:var(--text-muted)}
+#resumo p strong{color:var(--text-primary)}
+.extras-grid{display:grid; gap:1.1rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:1rem}
 .info{font-weight:600; margin-top:.65rem; color:var(--accent-strong)} /* mensagens informativas */
 .info.error{color:var(--error)}                               /* mensagem de erro (vermelha) */
 .info.warning{color:var(--warning)}                           /* mensagem de aviso (laranja) */
@@ -204,6 +255,7 @@ input:focus, select:focus{border-color:var(--highlight); box-shadow:var(--ring);
 }
 
 #btnConcluirPlanejamento:hover,#btnConcluirPlanejamento:focus{transform:translateY(-3px); box-shadow:0 30px 60px rgba(31,161,139,.32); filter:brightness(1.03)} /* efeito hover/focus */
+#btnConcluirPlanejamento:focus-visible{outline:none; box-shadow:var(--ring)}
 #btnConcluirPlanejamento:active{transform:translateY(-1px)}  /* aperta um pouco ao clicar */
 @media (max-width:540px){#btnConcluirPlanejamento{width:min(340px,100%)}} /* em telas pequenas, ocupa quase toda a largura */
 
@@ -226,4 +278,12 @@ input:focus, select:focus{border-color:var(--highlight); box-shadow:var(--ring);
 @media (max-width:420px){
   .plan-section h2{font-size:1.8rem}                           /* título menor para caber melhor */
   .step{padding:1.6rem}                                        /* etapas mais compactas */
+}
+@media (min-width:720px){
+  .resultados ul{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important}
+  header .logo{animation:none}
 }

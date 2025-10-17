@@ -3173,6 +3173,63 @@ document.addEventListener('DOMContentLoaded', () => {
   const diasInput = document.querySelector('#diasInput');
   const gerarBtn = document.querySelector('#gerarBtn');
   const container = document.querySelector('#itinerarioContainer');
+  const planHandoff = document.getElementById('planHandoff');
+  const handoffPill = planHandoff?.querySelector('[data-handoff-pill]');
+  const handoffTitle = document.getElementById('handoffTitle');
+  const handoffDescription = document.getElementById('handoffDescription');
+  const handoffTags = planHandoff?.querySelector('[data-handoff-tags]');
+  const handoffHighlights = planHandoff?.querySelector('[data-handoff-highlights]');
+
+  const planStorageKey = 'explora.plan';
+
+  const styleSummaries = {
+    relax: {
+      label: 'Relaxante',
+      emoji: '🌿',
+      headline: 'Respire fundo e desacelere o ritmo.',
+      description: 'Momentos suaves, cafés charmosos e tempo para apreciar a paisagem.',
+      highlights: [
+        '🌅 Reserve um pôr do sol para contemplar sem pressa.',
+        '🧘 Inclua um momento de autocuidado ou spa durante a estadia.'
+      ]
+    },
+    aventura: {
+      label: 'Aventura',
+      emoji: '🧗',
+      headline: 'Energia alta para explorar trilhas e desafios.',
+      description: 'Dias ativos com natureza, esportes e muita adrenalina.',
+      highlights: [
+        '🥾 Comece o roteiro com a atividade mais intensa quando estiver com energia.',
+        '🔥 Celebre as conquistas do dia com um jantar cheio de histórias.'
+      ]
+    },
+    historico: {
+      label: 'História & Cultura',
+      emoji: '🏛️',
+      headline: 'Caminhe por museus, patrimônios e histórias locais.',
+      description: 'Visitas guiadas, arquitetura emblemática e sabores típicos que contam a cultura.',
+      highlights: [
+        '🎟️ Garanta ingressos antecipados para as atrações mais disputadas.',
+        '🍷 Prove um prato típico para completar a imersão cultural.'
+      ]
+    },
+    todos: {
+      label: 'Mix equilibrado',
+      emoji: '🎡',
+      headline: 'Um equilíbrio entre relax, aventura e cultura.',
+      description: 'Dias variados que combinam descanso, descoberta e diversão.',
+      highlights: [
+        '🧭 Alterne experiências intensas e leves para manter o ritmo agradável.',
+        '📸 Reserve tempo para explorar cantinhos fotogênicos sem correria.'
+      ]
+    }
+  };
+
+  const transportDisplay = {
+    carro: { tag: '🚗', label: 'Carro alugado' },
+    onibus: { tag: '🚌', label: 'Ônibus' },
+    aviao: { tag: '✈️', label: 'Avião' }
+  };
 
   // 1) Preenche a lista de cidades no <select>
   function popularCidades() {
@@ -3277,10 +3334,96 @@ document.addEventListener('DOMContentLoaded', () => {
     // Depois que os cards são adicionados ao HTML, corrige as imagens (chama hidratarImagens)
     hidratarImagens(container);
   }
+  function hydrateFromPlanner(){
+    const raw = sessionStorage.getItem(planStorageKey);
+    if(!raw) return;
+
+    let data;
+    try {
+      data = JSON.parse(raw);
+    } catch (err) {
+      console.warn('Não foi possível ler o plano salvo:', err);
+      return;
+    }
+
+    if(!data) return;
+
+    const { destino, estilo, dias, noites, estiloLabel, estiloEmoji, hospedagemLabel, transporte, transporteLabel, moodHeadline, moodDescription, moodHighlights } = data;
+
+    let shouldGenerate = false;
+
+    if(destino && cidadeSelect.querySelector(`option[value="${destino}"]`)){
+      cidadeSelect.value = destino;
+      shouldGenerate = true;
+    }
+
+    if(estilo && Array.from(tipoSelect.options).some(opt=>opt.value===estilo)){
+      tipoSelect.value = estilo;
+      shouldGenerate = true;
+    }
+
+    if(dias){
+      diasInput.value = dias;
+      shouldGenerate = true;
+    } else if(noites){
+      diasInput.value = noites;
+      shouldGenerate = true;
+    }
+
+    if(planHandoff){
+      planHandoff.hidden = false;
+      if(handoffPill) handoffPill.textContent = '✨ Plano importado do Planejar';
+
+      const summary = estilo && styleSummaries[estilo] ? styleSummaries[estilo] : null;
+
+      if(handoffTitle){
+        const label = estiloLabel || summary?.label || 'Viagem personalizada';
+        const emoji = estiloEmoji || summary?.emoji || '🧭';
+        handoffTitle.textContent = destino
+          ? `${emoji} ${label} em ${destino}`
+          : `${emoji} ${label}`;
+      }
+
+      if(handoffDescription){
+        const headline = moodHeadline || summary?.headline || 'Continue de onde parou.';
+        const body = moodDescription || summary?.description || 'Ajuste as preferências ao lado e gere o roteiro completo.';
+        handoffDescription.textContent = destino ? `${headline} ${body}` : `${headline} ${body}`;
+      }
+
+      if(handoffTags){
+        const tags=[];
+        if(destino) tags.push(`📍 ${destino}`);
+        const totalDias = dias || noites || 0;
+        if(totalDias) tags.push(`🗓️ ${totalDias} dia${totalDias>1?'s':''}`);
+        if(estiloLabel || summary?.label) tags.push(`${estiloEmoji || summary?.emoji || '✨'} ${estiloLabel || summary?.label}`);
+        if(hospedagemLabel) tags.push(`🏡 ${hospedagemLabel}`);
+        if(transporte){
+          const t = transportDisplay[transporte];
+          tags.push(`${t?.tag || '🚗'} ${transporteLabel || t?.label || 'Transporte definido'}`);
+        } else if(transporteLabel){
+          tags.push(`🚗 ${transporteLabel}`);
+        }
+        handoffTags.innerHTML = tags.map(tag=>`<span class="handoff-tag">${tag}</span>`).join('');
+      }
+
+      if(handoffHighlights){
+        const list = Array.isArray(moodHighlights) && moodHighlights.length
+          ? moodHighlights
+          : summary?.highlights || ['Ajuste os campos ao lado e gere o roteiro completo.', 'Misture experiências diferentes para viver o destino no seu ritmo.'];
+        handoffHighlights.innerHTML = list.map(item=>`<li>${item}</li>`).join('');
+      }
+    }
+
+    if(shouldGenerate){
+      setTimeout(()=>gerarItinerario(), 160);
+    }
+  }
+
 
   // Chama a função que preenche o select de cidades
   popularCidades();
 
   // Quando clicar no botão "Gerar", monta o roteiro
   gerarBtn.addEventListener('click', gerarItinerario);
+    hydrateFromPlanner();
 });

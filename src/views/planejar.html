@@ -51,6 +51,11 @@
         <label for="noitesInput">Noites:</label> <!-- rótulo do input -->
         <input type="number" id="noitesInput" value="1" min="1" /> <!-- nº de noites -->
       </div>
+      <div class="form-row"> <!-- linha para quantidade de viajantes -->
+        <label for="hospedagemPessoas">Viajantes na hospedagem:</label>
+        <input type="number" id="hospedagemPessoas" value="1" min="1" />
+      </div>
+      <p class="hint">Informe quantas pessoas vão dividir a hospedagem e escolha o tipo para ver quartos e custo por pessoa.</p>
       <div class="buttons"> <!-- botões de tipo de hospedagem -->
         <button class="btn-outline stayBtn" data-type="casa">Casa Alugada</button> <!-- opção casa -->
         <button class="btn-outline stayBtn" data-type="hotel">Hotel</button> <!-- opção hotel -->
@@ -61,12 +66,11 @@
     <!-- === Passo 4: Transporte === -->
     <div class="step" id="step-transport" style="display:none"> <!-- oculto até escolher hospedagem -->
       <h3>4. Transporte</h3> <!-- título -->
-      <div class="form-row"> <!-- linha com label + input -->
-        <label for="numPessoas">Pessoas:</label> <!-- rótulo -->
-        <input type="number" id="numPessoas" value="1" min="1" /> <!-- nº de viajantes -->
-      </div>
+      <p class="info-total">Viajantes considerados: <span id="totalViajantes">1</span></p>
+      <p class="hint">Escolha um meio de transporte para ver custos estimados, distância e tempo de viagem.</p>
       <div class="buttons"> <!-- botões de tipo de transporte -->
-        <button class="btn-outline transportBtn" data-type="carro">Carro</button> <!-- simula aluguel + combustível -->
+       <button class="btn-outline transportBtn" data-type="carro-proprio">Carro próprio</button>
+        <button class="btn-outline transportBtn" data-type="carro-alugado">Carro alugado</button>
         <button class="btn-outline transportBtn" data-type="onibus">Ônibus</button> <!-- calcula por km e pessoas -->
         <button class="btn-outline transportBtn" data-type="aviao">Avião</button> <!-- valor base por pessoa -->
       </div>
@@ -76,8 +80,13 @@
     <!-- === Passo 5: Resumo e Dicas === -->
     <div class="step" id="step-summary" style="display:none"> <!-- aparece após transporte -->
       <h3>5. Resumo e Dicas</h3> <!-- título -->
-      <div id="resumo" class="resumo"></div> <!-- origem, destino, noites -->
-      <div id="dicas" class="dicas"></div> <!-- lista de dicas do destino -->
+       <div id="resumo" class="card-info"></div> <!-- origem, destino, noites -->
+      <div id="dicas" class="card-info"></div> <!-- lista de dicas do destino -->
+      <div class="extras-grid"> <!-- informações adicionais -->
+        <div id="checklist" class="card-info"></div>
+        <div id="climaBagagem" class="card-info"></div>
+        <div id="mobilidade" class="card-info"></div>
+      </div>
       <p id="final-msg" style="display:none;margin-top:16px;font-weight:600;">agora faça o seu roteiro com a gente</p> <!-- mensagem final -->
       <button id="btnConcluirPlanejamento" type="button">Concluir Planejamento</button> <!-- CTA final -->
     </div>
